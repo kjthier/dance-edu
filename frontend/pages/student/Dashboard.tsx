@@ -1,3 +1,20 @@
+import React from 'react'
+import '.../index.css'
+
+const Dashboard: React.FC = () => {
+  return (
+    <h1>Hello world</h1>
+    // <div className="dashboard">
+    //   <ScheduleOverview />
+    //   <EnrolledCourses />
+    //   <ProgressGoals />
+    //   <Level />
+    // </div>
+  );
+};
+
+export default Dashboard
+
 // import { useState, useEffect } from 'react'
 // import { Course } from '/types/Course'
 
