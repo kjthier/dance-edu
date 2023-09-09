@@ -4,7 +4,7 @@ import PlaceholderImg from '../assets/course-card-img.jpg';
 export const mockCourses: ICourse[] = [
   {
     id: "1",
-    title: "Math 101",
+    title: "Ballet",
     start: new Date(),
     allDay: true,
     url: "",
@@ -12,11 +12,11 @@ export const mockCourses: ICourse[] = [
     editable: false,
     extendedProps: {
       level: CourseLevel.LEVEL1,
-      description: "Introductory course to Mathematics",
+      description: "Introductory course to Ballet",
       longDescription: "This is a longer description",
       teacher: Teacher.EmilyJohnson,
       image: PlaceholderImg,
-      tags: ["math", "beginner"],
+      tags: ["ballet", "beginner"],
       schedule: [{ date: "2023-09-03", startTime: "10:00", endTime: "12:00" }],
       duration: "2 hours",
       location: Location.STUDIO1,

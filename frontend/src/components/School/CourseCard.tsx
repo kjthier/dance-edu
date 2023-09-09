@@ -24,27 +24,27 @@ const CourseCard: React.FC<{ course: ICourse; isEnrolled?: boolean; onRegister?:
 
             <Box className="course-card-level-type">
               <Text as="p" className="course-card-programType">
-                {course.programType}
+                {course.extendedProps.programType}
               </Text>
               <Text as="span" className="course-card-level">
-                Level {course.level}
+                Level {course.extendedProps.level}
               </Text>
             </Box>
             
             <Text as="span" className="course-card-time">
-                {course.location}
+                {course.extendedProps.location}
             </Text>
 
             <Text as="span" className="course-card-time">
-                {`${course.duration}`}
+                {`${course.extendedProps.duration}`}
             </Text>
 
             <Text as="p" className="course-card-teacher"> 
-                with {course.teacher}
+                with {course.extendedProps.teacher}
             </Text>
 
             <Text as="p" className="course-card-description">
-                {course.description}
+                {course.extendedProps.description}
             </Text>
             
             <Box className="action-area">

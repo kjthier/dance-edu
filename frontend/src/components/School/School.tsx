@@ -3,7 +3,7 @@ import { Box } from '@radix-ui/themes'
 import { ICourse } from '../../types/ICourse'
 import { mockCourses } from '../../data/mockCourses'
 import CourseCard from './CourseCard'
-import './school.css';
+import './school.css'
 
 const CoursesDisplayed: React.FC = () => {
 
@@ -11,10 +11,10 @@ const CoursesDisplayed: React.FC = () => {
   const [courses, setCourses] = useState<ICourse[]>(mockCourses)
 
   // Derive enrolled and available courses
-  const enrolledCourses = courses.filter(course => course.isEnrolled)
-  const availableCourses = courses.filter(course => !course.isEnrolled)
+  const enrolledCourses = courses.filter(course => course.extendedProps.isEnrolled)
+  const availableCourses = courses.filter(course => !course.extendedProps.isEnrolled)
 
-  const handleRegister = (courseId: number) => {
+  const handleRegister = (courseId: string) => {
     setCourses(prevCourses =>
       prevCourses.map(course => 
         (course.id === courseId 
@@ -35,7 +35,7 @@ const CoursesDisplayed: React.FC = () => {
               <CourseCard 
                 key={course.id} 
                 course={course}
-                isEnrolled={course.isEnrolled}
+                isEnrolled={course.extendedProps.isEnrolled}
               />
           ))}
           </Box>
@@ -49,7 +49,7 @@ const CoursesDisplayed: React.FC = () => {
         <h3 className="course-section">Courses</h3>
         <Box className="course-grid">
           {availableCourses
-            .filter((course) => course.programType === 'Course' && course.studioType === 'Live')
+            .filter((course) => course.extendedProps.programType === 'Course' && course.extendedProps.studioType === 'Live')
             .map((course) => (
               <CourseCard
                 key={course.id}
@@ -65,7 +65,7 @@ const CoursesDisplayed: React.FC = () => {
         <h3 className="course-section">Classes</h3>
         <Box className="course-grid">
           {availableCourses
-            .filter((course) => course.programType === 'Class' && course.studioType === 'Live')
+            .filter((course) => course.extendedProps.programType === 'Class' && course.extendedProps.studioType === 'Live')
             .map((course) => (
               <CourseCard
                 key={course.id}
@@ -81,7 +81,7 @@ const CoursesDisplayed: React.FC = () => {
         <h3 className="course-section">Workshops</h3>
         <Box className="course-grid">
           {availableCourses
-            .filter((course) => course.programType === 'Workshop' && course.studioType === 'Live')
+            .filter((course) => course.extendedProps.programType === 'Workshop' && course.extendedProps.studioType === 'Live')
             .map((course) => (
               <CourseCard
                 key={course.id}
@@ -99,7 +99,7 @@ const CoursesDisplayed: React.FC = () => {
         </h2>
         <Box className="course-grid">
           {availableCourses
-            .filter((course) => course.programType === 'Event')
+            .filter((course) => course.extendedProps.programType === 'Event')
             .map((course) => (
               <CourseCard
                 key={course.id}
@@ -117,7 +117,7 @@ const CoursesDisplayed: React.FC = () => {
       <Box className="available-courses">
         <Box className="course-grid">
           {availableCourses
-            .filter((course) => course.studioType === 'Virtual' && course.programType !== 'Event')
+            .filter((course) => course.extendedProps.studioType === 'Virtual' && course.extendedProps.programType !== 'Event')
             .map((course) => (
               <CourseCard
                 key={course.id}
