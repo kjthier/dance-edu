@@ -1,13 +1,13 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Dashboard from './src/pages/student/Dashboard'
+import StudentHome from './src/pages/student/StudentHome'
 
 const App: React.FC = () => {
     return (
         <Router>
             <div>
                 <Routes>
-                    <Route path="/student" element={<Dashboard />} />
+                    <Route path="/student/*" element={<StudentHome />} />
                 </Routes>
             </div>
         </Router>

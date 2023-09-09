@@ -1,0 +1,77 @@
+.course-card {
+    max-width: 200px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .course-card-content {
+    padding: 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+  .course-card-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: var(--primary-text-color);
+  }
+  
+  .course-card-programType {
+    font-size: 13px;
+    color: var(--secondary-text-color);
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  
+  .course-card-description {
+    font-size: 13px;
+    margin: 10px 0px;
+    color: var(--secondary-text-color);
+  }
+  
+  .course-card-teacher {
+    font-size: 13px;
+    color: var(--tertiary-text-color);
+    margin-top: 10px;
+  }
+  
+  .course-card-level-type {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .course-card-level,
+  .course-card-time {
+    font-size: 12px;
+    color: var(--primary-text-color);
+  }
+  
+  .course-card-level {
+    font-weight: bold;
+  }
+  
+  .action-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* aligns items to the right */
+    justify-content: space-between; /* maximizes space between items */
+    flex-grow: 1; /* allows the container to take up remaining space */
+  }
+  
+  .action-label {
+    align-self: flex-end; /* aligns individual item to the end of the flexbox */
+    margin-top: auto; /* pushes the button or label to the bottom */
+  }
+
+  @media (max-width: 768px) {
+    .course-card-title, .course-card-description, .course-card-teacher {
+      font-size: 0.8rem;
+    }
+  }

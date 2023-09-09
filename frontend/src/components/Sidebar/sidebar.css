@@ -1,0 +1,45 @@
+.main-container {
+  display: grid;
+  padding: 0px 20px 20px 20px;
+  background-color: var(--primary-bg-color);
+  height: 100vh;
+
+}
+.content-wrapper {
+  display: flex;
+  padding: 20px;
+  background-color: var(--secondary-bg-color);
+
+}
+
+.main-content {
+  flex-grow: 1;
+}
+
+.sidebar {
+  width: 150px; 
+  position: relative;  
+  height: 100%;
+
+}
+
+.sidebar ul {
+  list-style-type: none;  
+  padding: 0;  
+}
+
+.sidebar ul li {
+  padding-bottom: 12px;  
+  text-align: left; 
+}
+
+.sidebar ul li a {
+  text-decoration: none; 
+  font-size: 16px; 
+}
+
+.sidebar ul li a:hover {
+  color: #989898;  
+  text-decoration: none;  
+
+}

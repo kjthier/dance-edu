@@ -1,0 +1,49 @@
+.myStudio-heading {
+  margin: 0px 0px 10px 0px;
+}
+
+.course-section-heading {
+  margin: 22px 0px 10px 0px;
+}
+
+.enrolled-label {
+  bottom: 10px;
+  left: 10px;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+  color: var(--quaternary-text-color);
+}
+
+.register-btn {
+  background-color: var(--violet-5);
+  color: var(--violet-11);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-top: auto; /* Pushes the button to the bottom if there is free space */
+}
+
+.register-btn:hover {
+  background-color: var(--violet-6);
+}
+
+.enrolled-courses {
+  margin-bottom: 30px;
+}
+
+.course-section {
+  margin-bottom: 10px;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 16px;  /* Adds space between all course cards */
+}
+
+/* background: linear-gradient(270deg,rgba(23,25,39,.9) 0,rgba(23,25,39,.72) 48.96%,rgba(23,25,39,.54)); */

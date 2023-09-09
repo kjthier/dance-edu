@@ -1,0 +1,40 @@
+/* Variables */
+@import '@radix-ui/themes/styles.css';
+@import '@radix-ui/colors/mauve.css';
+@import '@radix-ui/colors/black-alpha.css';
+@import '@radix-ui/colors/violet.css';
+
+:root {
+    --primary-bg-color: #ecf0f1;
+    --secondary-bg-color: #f6fafb;
+    --primary-text-color: #333;
+    --secondary-text-color: #666;
+    --tertiary-text-color: #999;
+    --quaternary-text-color: #0169aa;
+    --fifth-text-color: #47869e;
+    --border-color: #ccc;
+    --main-bg-color: #fdfeff;
+    --main-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Global */
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  h2 {
+    font-weight: 450;
+    font-size: 22px;
+  }
+
+  h3 {
+    font-weight: 300;
+    font-size: 18px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+  

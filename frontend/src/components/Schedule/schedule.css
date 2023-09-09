@@ -1,0 +1,57 @@
+.schedule-container {
+    padding: 1em;
+    border-radius: 6px;
+    box-shadow: var(--main-shadow);
+  }
+  
+/* Target FullCalendar's built-in button classes to style the navigation buttons */
+
+.fc-button {
+  background-color: white !important;
+  color: var(--mauve-11) !important;
+  font-size: 14px !important;
+  border: 1px solid var(--mauve-6) !important;
+}
+
+.fc-button:hover {
+  background-color: var(--violet-3) !important;
+  color: var(--mauve-11) !important;
+}
+
+.fc-button-active,
+.fc-button-focus {
+    background-color: var(--violet-5) !important;
+    outline: none !important;
+    border: none !important;
+}
+
+.fc-toolbar-title {
+    font-size: 24px !important;
+    font-weight: 450 !important;
+}
+
+.fc-col-header-cell-cushion {
+    color: var(--mauve-11) !important;
+    font-size: 14px !important;
+    font-weight: 450 !important;
+}
+
+.fc-daygrid-day-number {
+    color: var(--mauve-11) !important;
+    font-size: 14px !important;
+    font-weight: 450 !important;
+}
+
+.fc-event-title-container {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    background-color: var(--fifth-text-color) !important;
+}
+
+.fc-day-today {
+    background-color: var(--mauve-3) !important;
+  }
+  
+
+
+
