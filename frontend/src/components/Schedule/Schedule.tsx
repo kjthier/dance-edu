@@ -51,8 +51,9 @@ const Schedule: React.FC = () => {
 
   return (
     <div className='schedule-container'>
-      <div className="schedule-container__fullcalendar">
+      <div className="schedule-container__fullcalendar" id='fullcalendar'>
         <FullCalendar
+          
           plugins={[dayGridPlugin]}
           initialView={viewMode}
           events={allEvents}
@@ -66,7 +67,8 @@ const Schedule: React.FC = () => {
             setViewMode(args.view.type)
           }}
         />
-        {isModalOpen && clickedEvent && (
+
+        {clickedEvent && (
         clickedEvent.editable 
           ? <EventEditModal
               event={clickedEvent}
@@ -74,6 +76,7 @@ const Schedule: React.FC = () => {
               onClose={handleCloseModal}
             />
           : <EventDetailModal
+              isOpen={isModalOpen}
               event={clickedEvent}
               onClose={handleCloseModal}
             />
