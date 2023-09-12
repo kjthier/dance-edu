@@ -1,6 +1,8 @@
 import 'dotenv/config'
 import express from 'express'
 import courseRoutes from './routes/courseRoutes.js'
+import authRoutes from './routes/authRoutes.js'
+// import userEventRoutes from './routes/userEventRoutes.js'
 import cors from 'cors'
 import dbConnect from './dbConnect.js'
 
@@ -19,3 +21,5 @@ app.listen(PORT, () => {
 })
 
 app.use('/courses', courseRoutes)
+app.use('/api/auth', authRoutes)
+// app.use('/userEvents', userEventRoutes)

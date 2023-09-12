@@ -1,10 +1,23 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { Box, Text, Heading, Flex } from '@radix-ui/themes'
 import Avatr from './Avatar'
 import logo from '../../assets/logo.png'
 import './Header.css'
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  userId: string 
+}
+
+const Header: React.FC<HeaderProps> = ({ userId }) => {
+  const [firstName, setFirstName] = useState('')
+
+  useEffect(() => {
+    console.log(`Fetching data for user ID: ${userId}`)
+    fetch(`https://dance-edu.onrender.com/user/${userId}`)
+    .then(res => res.json())
+    .then(data => setFirstName(data.firstName))
+  }, [userId])
+
 
     return (
         <div className='header'>
@@ -16,7 +29,7 @@ const Header: React.FC = () => {
               <Avatr />
               <Box >
                 <Text as="p" mb="1" size="2" weight="bold">
-                  Welcome, Karin!
+                  Welcome, {firstName}!
                 </Text>
               </Box>
             </Flex>

@@ -19,6 +19,7 @@
     "@radix-ui/themes": "^1.1.2",
     "@types/fullcalendar": "^3.8.0",
     "axios": "^1.5.0",
+    "bcrypt": "^5.1.1",
     "fullcalendar": "^6.1.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

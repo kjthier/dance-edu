@@ -1,22 +1,26 @@
-import { Link } from 'react-router-dom';
-import './sidebar.css';
+import { Link } from 'react-router-dom'
+import './sidebar.css'
 
-const Sidebar: React.FC = () => {
-  return (
-    <div className='sidebar'>
-      <nav>
-        <ul>
-          <li><Link to="dashboard">Dashboard</Link></li>
-          <li><Link to="school">School</Link></li>
-          <li><Link to="schedule">Schedule</Link></li>
-          <li><Link to="progress">Progress</Link></li>
-          <li><Link to="questions">Questions</Link></li>
-          <li><Link to="about">About</Link></li>
-          <li><Link to="contact">Contact</Link></li>
-        </ul>
-      </nav>
-    </div>
-  );
-};
+type SidebarProps = {
+    userId: string
+}
 
-export default Sidebar;
+const Sidebar: React.FC<SidebarProps> = ({ userId }) => {
+    return (
+        <div className='sidebar'>
+            <nav>
+                <ul>
+                    <li><Link to={`/student/${userId}/dashboard`}>Dashboard</Link></li>
+                    <li><Link to={`/student/${userId}/school`}>School</Link></li>
+                    <li><Link to={`/student/${userId}/schedule`}>Schedule</Link></li>
+                    <li><Link to={`/student/${userId}/progress`}>Progress</Link></li>
+                    <li><Link to={`/student/${userId}/questions`}>Questions</Link></li>
+                    <li><Link to={`/student/${userId}/about`}>About</Link></li>
+                    <li><Link to={`/student/${userId}/contact`}>Contact</Link></li>
+                </ul>
+            </nav>
+        </div>
+    )
+}
+
+export default Sidebar

@@ -1,20 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { EventClickArg } from '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import EventEditModal from './EventEditModal'
 import EventDetailModal from './EventDetailModal'
 import { ICourse, IUserEvent, IEvent } from '../../types/ICourse'
-import { mockCourses } from '../../data/mockCourses'
 import { mockUserEvents } from '../../data/mockCourses'
 import './schedule.css'
 
-const Schedule: React.FC = () => {
-  const [viewMode, setViewMode] = useState('dayGridWeek') // week view by default
+type ScheduleProps = {
+  userId: string
+}
+
+const Schedule: React.FC<ScheduleProps> = () => {
+  const [viewMode, setViewMode] = useState('dayGridMonth') // week view by default
   const [isModalOpen, setIsModalOpen] = useState(true)
-  const [courses, setCourses] = useState<ICourse[]>(mockCourses)
+  const [courses, setCourses] = useState<ICourse[]>([])
   const [userEvents, setUserEvents] = useState<IUserEvent[]>(mockUserEvents)
   const [clickedEvent, setClickedEvent] = useState<IEvent | null>(null)
+
+  useEffect(() => {
+    // Fetch data from API when component mounts
+    fetch('https://dance-edu.onrender.com/courses')
+        .then(response => response.json())
+        .then(data => setCourses(data))
+        .catch(error => console.log('Error fetching courses:', error))
+  }, [])
 
   // merge courses & custom events for fullcalendar
   const allEvents: IEvent[] = [...courses, ...userEvents]
@@ -53,7 +64,6 @@ const Schedule: React.FC = () => {
     <div className='schedule-container'>
       <div className="schedule-container__fullcalendar" id='fullcalendar'>
         <FullCalendar
-          
           plugins={[dayGridPlugin]}
           initialView={viewMode}
           events={allEvents}

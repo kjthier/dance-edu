@@ -8,7 +8,4 @@ router.post('/', createCourse)
 router.get('/:id', getCourse)
 router.put('/:id', updateCourse)
 
-
-
-
 export default router

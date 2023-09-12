@@ -1,14 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box } from '@radix-ui/themes'
 import { ICourse } from '../../types/ICourse'
-import { mockCourses } from '../../data/mockCourses'
 import CourseCard from './CourseCard'
 import './school.css'
 
-const CoursesDisplayed: React.FC = () => {
+type CoursesDisplayedProps = {
+  userId: string
+}
 
-  // Initialize state with consolidated mock data
-  const [courses, setCourses] = useState<ICourse[]>(mockCourses)
+const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
+
+  // Initialize state with empty array
+  const [courses, setCourses] = useState<ICourse[]>([])
+
+  useEffect(() => {
+    // Fetch data from API when component mounts
+    fetch('https://dance-edu.onrender.com/courses')
+        .then(response => response.json())
+        .then(data => setCourses(data))
+        .catch(error => console.log('Error fetching courses:', error))
+  }, [])
 
   // Derive enrolled and available courses
   const enrolledCourses = courses.filter(course => course.extendedProps.isEnrolled)

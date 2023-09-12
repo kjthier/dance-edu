@@ -4,7 +4,11 @@ import QuestionForm from './QuestionForm'
 import { IQuestionAnswer } from '../../types/IQuestionAnswer'
 import './questions.css'
 
-const Questions: React.FC = () => {
+type QuestionsProps = {
+    userId: string
+  }
+
+const Questions: React.FC<QuestionsProps> = () => {
     const [questions, setQuestions] = useState<IQuestionAnswer[]>([])
     const [studentName, setStudentName] = useState<string | null>(null)
     const [studentId, setStudentId] = useState<string | null>(null)
