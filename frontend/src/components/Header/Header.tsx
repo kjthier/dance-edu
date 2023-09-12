@@ -13,10 +13,19 @@ const Header: React.FC<HeaderProps> = ({ userId }) => {
 
   useEffect(() => {
     console.log(`Fetching data for user ID: ${userId}`)
-    fetch(`https://dance-edu.onrender.com/user/${userId}`)
+    fetch(`https://dance-edu.onrender.com/api/auth/user/${userId}`)
+    // fetch(`http://localhost:3000/api/auth/user/${userId}`)
     .then(res => res.json())
-    .then(data => setFirstName(data.firstName))
+    
+    .then(data => {
+      console.log("Data from server:", data)
+
+      setFirstName(data.firstName)
+
+    })
   }, [userId])
+  console.log("Updated firstName:", firstName)
+
 
 
     return (

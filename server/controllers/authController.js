@@ -4,11 +4,17 @@ import bcrypt from 'bcrypt'
 
 export const registerUser = async (req, res) => {
     // Destructure request body to get username, email, and password
-    const { username, email, password } = req.body
     try {
-        const user = new User ({ username, email, password }) // create new user 
-        await user.save() // save the user
-        res.status(201).json(user) // user created successfully
+        const { firstName, lastName, username, email, password } = req.body
+        const newUser = new User({
+            firstName,
+            lastName,
+            username,
+            email,
+            password,
+        }) // create new user 
+        await newUser.save() // save the user
+        res.status(201).json(newUser) // user created successfully
     } catch (error) {
         res.status(400).json({ message: error.message })
     }
