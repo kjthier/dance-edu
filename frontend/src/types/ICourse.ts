@@ -45,7 +45,7 @@ export interface ISession {
 }
 
 export interface ICourse {
-  id: string
+  _id?: string
   title: string
   start: Date
   allDay?: boolean
@@ -70,7 +70,7 @@ export interface ICourse {
 }
 
 export interface IUserEvent {
-  id: string
+  _id?: string
   userId: string
   title: string
   start: Date
@@ -93,7 +93,7 @@ export interface IUserEvent {
 
 // merged properties of ICourse and IUserEvent
 export interface IEvent {
-  id: string
+  _id?: string
   userId?: string
   title: string
   start: Date

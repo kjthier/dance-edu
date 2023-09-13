@@ -6,7 +6,8 @@ import EventRegisterModal from '../Schedule/EventRegisterModal'
 import './School.css'
 
 type CoursesDisplayedProps = {
-    userId: string
+    _id: string
+    // userId: string
 }
 
 const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
@@ -15,7 +16,6 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
     const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
 
     useEffect(() => {
-        // Fetch data from API when component mounts
         fetch('https://dance-edu.onrender.com/courses')
             .then((response) => response.json())
             .then((data) => setCourses(data))
@@ -31,14 +31,18 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
     )
 
     const handleRegisterClick = (course: ICourse) => {
+        console.log("Setting selected course:", course)
+
         setSelectedCourse(course)
         setIsModalOpen(true)
     }
 
     const addToSchedule = () => {
+        console.log("Selected course inside addToSchedule:", selectedCourse)
+
         if (selectedCourse) {
             const index = courses.findIndex(
-                (course) => course.id === selectedCourse.id
+                (course) => course._id === selectedCourse._id
             )
             const newCourses = [...courses]
             newCourses[index].extendedProps.isEnrolled = true
@@ -46,14 +50,16 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
             // Update the courses state locally
             setCourses(newCourses)
 
+            console.log(`Fetch URL: https://dance-edu.onrender.com/courses/${selectedCourse?._id}/enroll`)
+
             fetch(
-                `https://dance-edu.onrender.com/courses/${selectedCourse.id}/enroll`,
+                `https://dance-edu.onrender.com/courses/${selectedCourse._id}/enroll`,
                 {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ isEnrolled: true }), // Since your server endpoint specifically enrolls, we send this
+                    body: JSON.stringify({ isEnrolled: true })
                 }
             )
                 .then((response) => {
@@ -73,7 +79,7 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
         }
     }
 
-    return (
+    return ( 
         <>
             {/* Enrolled courses */}
             <Box className='enrolled-courses'>
@@ -81,7 +87,7 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                 <Box className='course-grid'>
                     {enrolledCourses.map((course) => (
                         <CourseCard
-                            key={course.id}
+                            key={course._id}
                             course={course}
                             isEnrolled={course.extendedProps.isEnrolled}
                         />
@@ -102,11 +108,9 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                         )
                         .map((course) => (
                             <CourseCard
-                                key={course.id}
+                                key={course._id}
                                 course={course}
-                                onRegister={() => handleRegisterClick(course)}
-
-                                // onRegister={() => handleRegister(course.id)}
+                                onRegister={() =>       handleRegisterClick(course)}
                             />
                         ))}
                 </Box>
@@ -124,7 +128,7 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                         )
                         .map((course) => (
                             <CourseCard
-                                key={course.id}
+                                key={course._id}
                                 course={course}
                                 onRegister={() => handleRegisterClick(course)}
 
@@ -147,11 +151,9 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                         )
                         .map((course) => (
                             <CourseCard
-                                key={course.id}
+                                key={course._id}
                                 course={course}
                                 onRegister={() => handleRegisterClick(course)}
-
-                                // onRegister={() => handleRegister(course.id)}
                             />
                         ))}
                 </Box>
@@ -168,11 +170,9 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                         )
                         .map((course) => (
                             <CourseCard
-                                key={course.id}
+                                key={course._id}
                                 course={course}
                                 onRegister={() => handleRegisterClick(course)}
-
-                                // onRegister={() => handleRegister(course.id)}
                             />
                         ))}
                 </Box>
@@ -190,11 +190,9 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                         )
                         .map((course) => (
                             <CourseCard
-                                key={course.id}
+                                key={course._id}
                                 course={course}
                                 onRegister={() => handleRegisterClick(course)}
-
-                                // onRegister={() => handleRegister(course.id)}
                             />
                         ))}
                 </Box>
@@ -213,7 +211,3 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
 }
 
 export default CoursesDisplayed
-
-// button with a popup form to request a private session
-// add filter function
-// add search function

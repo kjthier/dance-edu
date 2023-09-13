@@ -1,5 +1,5 @@
 export interface IQuestionAnswer {
-    id: string;
+    _id?: string
     question: string;
     studentName: string;
     studentId: string;

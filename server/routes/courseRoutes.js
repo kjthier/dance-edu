@@ -5,8 +5,9 @@ const router = express.Router()
 
 router.get('/', getAllCourses)
 router.post('/', createCourse)
+router.put('/:id/enroll', updateToEnrolled)
+
 router.get('/:id', getCourse)
 router.put('/:id', updateCourse)
-router.put('/courses/:id/enroll', updateToEnrolled)
 
 export default router
