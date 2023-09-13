@@ -1,23 +1,45 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { Box, Text } from '@radix-ui/themes'
 import { IEvent } from '../../types/ICourse'
-import '../reusable/EventDetailModal.css'
-import React from 'react'
+import './EventUnenrollModal.css'
+import axios from 'axios'
 
 // Define prop types for this component
-interface EventRegisterModalProps {
+interface EventUnenrollModalProps {
     event: IEvent
     onClose: () => void
     isOpen: boolean
-    onAddToSchedule: () => void
 }
 
-const EventRegisterModal: React.FC<EventRegisterModalProps> = ({
+const EventUnenrollModal: React.FC<EventUnenrollModalProps> = ({
     event,
     onClose,
     isOpen,
-    onAddToSchedule
 }) => {
+    // Assume courseId and userId are either props or obtained some other way
+    const courseId = 'someCourseId'
+    const userId = 'someUserId'
+
+    const handleUnenroll = async () => {
+        try {
+            const response = await axios.put(
+                `https://your-api.com/courses/${courseId}/unenroll/${userId}`,
+                {
+                    isEnrolled: false,
+                }
+            )
+
+            if (response.status === 200) {
+                console.log('Successfully unenrolled')
+                onClose()
+            } else {
+                console.error('Failed to unenroll', response)
+            }
+        } catch (error) {
+            console.error('Error unenrolling course:', error)
+        }
+    }
+
     const { extendedProps, title } = event
 
     const formatDate = (isoDateString: string): string => {
@@ -47,7 +69,7 @@ const EventRegisterModal: React.FC<EventRegisterModalProps> = ({
                                     </em>
                                 </Text>
                                 <Text as='span' className='event-modal-level'>
-                                    Level: {extendedProps.level}
+                                    {extendedProps.level}
                                 </Text>
                             </Box>
 
@@ -85,14 +107,11 @@ const EventRegisterModal: React.FC<EventRegisterModalProps> = ({
                                 )}
                         </>
                     )}
-                    <Dialog.Close 
-                        className='action-label primary-btn'
-                        onClick={() => {
-                            onAddToSchedule()
-                            onClose()
-                        }}
+                    <Dialog.Close
+                        className='action-label secondary-btn'
+                        onClick={handleUnenroll}
                     >
-                        Register
+                        Unenroll
                     </Dialog.Close>
                 </Box>
             </Dialog.Content>
@@ -100,4 +119,4 @@ const EventRegisterModal: React.FC<EventRegisterModalProps> = ({
     )
 }
 
-export default EventRegisterModal
+export default EventUnenrollModal

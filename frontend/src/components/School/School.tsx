@@ -30,7 +30,7 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
         (course) => !course.extendedProps.isEnrolled
     )
 
-    const handleRegisterClick = (course: ICourse) => {
+    const handleMoreInfoClick = (course: ICourse) => {
         console.log("Setting selected course:", course)
 
         setSelectedCourse(course)
@@ -90,6 +90,8 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                             key={course._id}
                             course={course}
                             isEnrolled={course.extendedProps.isEnrolled}
+                            onMoreInfoClick={() => handleMoreInfoClick(course)}
+
                         />
                     ))}
                 </Box>
@@ -110,7 +112,7 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                             <CourseCard
                                 key={course._id}
                                 course={course}
-                                onRegister={() =>       handleRegisterClick(course)}
+                                onMoreInfoClick={() => handleMoreInfoClick(course)}
                             />
                         ))}
                 </Box>
@@ -130,7 +132,7 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                             <CourseCard
                                 key={course._id}
                                 course={course}
-                                onRegister={() => handleRegisterClick(course)}
+                                onMoreInfoClick={() => handleMoreInfoClick(course)}
 
                                 // onRegister={() => handleRegister(course.id)}
                             />
@@ -153,7 +155,7 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                             <CourseCard
                                 key={course._id}
                                 course={course}
-                                onRegister={() => handleRegisterClick(course)}
+                                onMoreInfoClick={() => handleMoreInfoClick(course)}
                             />
                         ))}
                 </Box>
@@ -172,7 +174,7 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                             <CourseCard
                                 key={course._id}
                                 course={course}
-                                onRegister={() => handleRegisterClick(course)}
+                                onMoreInfoClick={() => handleMoreInfoClick(course)}
                             />
                         ))}
                 </Box>
@@ -192,7 +194,7 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                             <CourseCard
                                 key={course._id}
                                 course={course}
-                                onRegister={() => handleRegisterClick(course)}
+                                onMoreInfoClick={() => handleMoreInfoClick(course)}
                             />
                         ))}
                 </Box>

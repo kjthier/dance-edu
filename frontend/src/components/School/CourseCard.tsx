@@ -7,10 +7,10 @@ import './CourseCard.css'
 const CourseCard: React.FC<{
     course: ICourse
     isEnrolled?: boolean
-    onRegister?: () => void
-}> = ({ course, isEnrolled, onRegister }) => {
+    onMoreInfoClick?: () => void
+}> = ({ course, isEnrolled, onMoreInfoClick }) => { 
     return (
-        <Box className='course-card'>
+        <Box className='course-card' onClick={onMoreInfoClick}> 
             <Box className='course-card-content'>
                 <Text as='div' className='course-card-title'>
                     {course.title}
@@ -21,7 +21,7 @@ const CourseCard: React.FC<{
                         {course.extendedProps.programType}
                     </Text>
                     <Text as='span' className='course-card-level'>
-                        Level {course.extendedProps.level}
+                        Level: {course.extendedProps.level}
                     </Text>
                 </Box>
 
@@ -50,7 +50,6 @@ const CourseCard: React.FC<{
                     ) : (
                         <button
                             className='action-label secondary-btn register-btn'
-                            onClick={onRegister}
                         >
                             More Info
                         </button>
