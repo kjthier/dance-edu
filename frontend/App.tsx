@@ -4,6 +4,7 @@ import StudentHome from './src/pages/StudentHome'
 import Auth from './src/components/Auth/Auth'
 
 const App: React.FC = () => {
+
     return (
         <Router>
             <div>

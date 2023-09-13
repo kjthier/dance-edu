@@ -3,10 +3,9 @@ import { EventClickArg } from '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import EventEditModal from './EventEditModal'
-import EventDetailModal from './EventDetailModal'
+import EventDetailModal from '../reusable/EventDetailModal'
 import { ICourse, IUserEvent, IEvent } from '../../types/ICourse'
-import { mockUserEvents } from '../../data/mockCourses'
-import './schedule.css'
+import './Schedule.css'
 
 type ScheduleProps = {
   userId: string
@@ -16,7 +15,7 @@ const Schedule: React.FC<ScheduleProps> = () => {
   const [viewMode, setViewMode] = useState('dayGridMonth') // week view by default
   const [isModalOpen, setIsModalOpen] = useState(true)
   const [courses, setCourses] = useState<ICourse[]>([])
-  const [userEvents, setUserEvents] = useState<IUserEvent[]>(mockUserEvents)
+  const [userEvents, setUserEvents] = useState<IUserEvent[]>([])
   const [clickedEvent, setClickedEvent] = useState<IEvent | null>(null)
 
   useEffect(() => {
@@ -74,8 +73,18 @@ const Schedule: React.FC<ScheduleProps> = () => {
             right: 'today dayGridDay,dayGridWeek,dayGridMonth'
           }}
           viewDidMount={(args) => {
-            setViewMode(args.view.type)
-          }}
+                    const calendarElement: HTMLElement | null = document.getElementById('fullcalendar');
+                    if (calendarElement) {
+                        if (args.view.type === 'dayGridWeek') {
+                            calendarElement.classList.add('week-view');
+                        } else if (args.view.type === 'dayGridDay') {
+                            calendarElement.classList.add('day-view');
+                        } else {
+                            calendarElement.classList.remove('week-view', 'day-view');
+                        }
+                    }
+                    setViewMode(args.view.type);
+                }}
         />
 
         {clickedEvent && (

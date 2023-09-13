@@ -45,5 +45,25 @@ export const updateCourse = async (req, res) => {
     }
 }
 
+export const updateToEnrolled = async (req, res) => {
+    try {
+        const course = await Course.findById(req.params.id)
+
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' })
+        }
+
+        // Explicitly set the isEnrolled property to true
+        course.extendedProps.isEnrolled = true;
+
+        const updatedCourse = await course.save()
+
+        res.status(200).json(updatedCourse)
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+
 
 

@@ -41,7 +41,6 @@ export const loginUser = async (req, res) => {
 }
 
 export const getUserById = async (req, res) => {
-    console.log("Get User by ID called")
     const { id } = req.params
     try {
         const user = await User.findById(id)

@@ -15,26 +15,111 @@
     --border-color: #ccc;
     --main-bg-color: #fdfeff;
     --main-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
+    --border-radius: 28px;
+}
   
-  /* Global */
-  * {
+* {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
-  }
+}
 
-  h2 {
+h2 {
     font-weight: 450;
     font-size: 22px;
-  }
+}
 
-  h3 {
+h3 {
     font-weight: 300;
     font-size: 18px;
-  }
+}
 
-  h4 {
+h4 {
     font-size: 16px;
-  }
+}
+
+.primary-btn {
+    font-size: 14px;
+    background: linear-gradient(0deg, #37687b, rgba(55, 104, 123, 0.7), rgba(55, 104, 123, 0.4));
+    color: #fff;
+    padding: 8px 12px;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    border-width: 0px;
+    transition: background 1s ease;
+    /* for transition */
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
   
+.primary-btn:hover {
+    background: linear-gradient(180deg, #47869e, rgba(71, 134, 158, 0.7), rgba(71, 134, 158, 0.4));
+}
+  
+.primary-btn::before, .primary-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.primary-btn::before {
+    background: linear-gradient(180deg, #47869e, rgba(71, 134, 158, 0.7), rgba(71, 134, 158, 0.4));
+    opacity: 0;
+    transition: opacity .6s ease;
+    pointer-events: none;
+}
+
+.primary-btn::after {
+    content: attr(data-text);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.primary-btn:hover::before {
+    opacity: 1;
+}
+
+.secondary-btn {
+    font-size: 15px;
+    background: var(--violet-5);
+    color: var(--violet-11);
+    padding: 8px 12px;
+    /* margin-top: 10px;
+    margin-left: 10px; */
+    border-radius: 8px;
+    cursor: pointer;
+    border-width: 0px;
+    position: relative;
+    overflow: hidden; 
+    z-index: 1;
+}
+
+.secondary-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* background: var(--violet-7); */
+    background: linear-gradient(180deg, var(--violet-6), rgba(160, 60, 240, 0.3), rgba(160, 60, 240, 0.1));
+    z-index: -1;
+    transition: opacity .2s ease;
+    opacity: 0;
+}
+
+.secondary-btn:hover::before {
+    opacity: 1;
+    background: linear-gradient(180deg, var(--violet-6), rgba(160, 60, 240, 0.3), rgba(160, 60, 240, 0.1));
+}
+

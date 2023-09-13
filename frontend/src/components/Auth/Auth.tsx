@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -9,22 +9,56 @@ const Auth: React.FC = () => {
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
 
+    // hardcoded user as logged in for dev
+    useEffect(() => {
+        const autoLogin = async () => {
+            if (process.env.NODE_ENV === 'development') {
+                const baseURL = 'https://dance-edu.onrender.com'
+                const endpoint = '/api/auth/login'
+
+                // Your test user's credentials
+                const testEmail = 'karint@example.com'
+                const testPassword = '1234'
+
+                try {
+                    const response = await axios.post(`${baseURL}${endpoint}`, {
+                        email: testEmail,
+                        password: testPassword,
+                    })
+
+                    if (response.data.token) {
+                        localStorage.setItem('authToken', response.data.token)
+                        localStorage.setItem('userId', response.data.userId)
+                        navigate(`/student/${response.data.userId}/schedule`)
+                    }
+                } catch (error) {
+                    console.log('Auto-login failed:', error)
+                }
+            }
+        }
+
+        autoLogin()
+    }, [navigate])
+
     const handleAuth = async () => {
         try {
+            const baseURL = 'https://dance-edu.onrender.com'
             const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup'
-            const payload = isLogin ? { email, password } : { username, email, password }
+            const payload = isLogin
+                ? { email, password }
+                : { username, email, password }
 
-            const response = await axios.post(`http://localhost:3000${endpoint}`, payload)
+            const response = await axios.post(`${baseURL}${endpoint}`, payload)
 
             if (response.data.token) {
                 localStorage.setItem('authToken', response.data.token) // store received JWT in local storage
                 localStorage.setItem('userId', response.data.userId) // store received userId in local storage
                 navigate(`/student/${response.data.userId}/schedule`)
-            } 
-        } catch (error) {
-                console.log('An error occured during login:', error)
             }
+        } catch (error) {
+            console.log('An error occured during login:', error)
         }
+    }
 
     return (
         <div>
@@ -35,8 +69,8 @@ const Auth: React.FC = () => {
                 <>
                     <h1>Login</h1>
                     <input
-                        type="email"
-                        placeholder="Email"
+                        type='email'
+                        placeholder='Email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
@@ -45,8 +79,8 @@ const Auth: React.FC = () => {
                 <>
                     <h1>Signup</h1>
                     <input
-                        type="text"
-                        placeholder="Username"
+                        type='text'
+                        placeholder='Username'
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
@@ -54,18 +88,15 @@ const Auth: React.FC = () => {
             )}
 
             <input
-                type="password"
-                placeholder="Password"
+                type='password'
+                placeholder='Password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button onClick={handleAuth}>
-                {isLogin ? 'Login' : 'Signup'}
-            </button>
+            <button onClick={handleAuth}>{isLogin ? 'Login' : 'Signup'}</button>
         </div>
     )
-    
 }
 
 export default Auth

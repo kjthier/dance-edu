@@ -50,7 +50,29 @@
 
 .fc-day-today {
     background-color: var(--mauve-3) !important;
-  }
+}
+
+.fc-event {
+    margin: 0px 4px !important;
+    padding: 4px 0px !important;
+}
+.fc-daygrid-event-dot {
+    display: none !important;
+}
+
+.fc-event-title,
+.fc-event-time {
+    font-size: 12px !important;
+    font-weight: normal !important;
+    color: var(--primary-text-color) !important;
+}
+
+
+
+
+
+
+
 
   
 

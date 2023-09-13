@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Box, Text } from '@radix-ui/themes'
 import QuestionForm from './QuestionForm'
 import { IQuestionAnswer } from '../../types/IQuestionAnswer'
-import './questions.css'
+import './Questions.css'
 
 type QuestionsProps = {
     userId: string

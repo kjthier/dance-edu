@@ -42,7 +42,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ onNewQuestion, studentName,
       </Form.Field>
 
       <Form.Submit asChild>
-        <button className="submit-question-btn" type="submit">Submit</button>
+        <button className="primary-btn" type="submit">Submit</button>
       </Form.Submit>
 
     </Form.Root>
