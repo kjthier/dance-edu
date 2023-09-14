@@ -1,9 +1,8 @@
 export interface IQuestionAnswer {
-    _id?: string
-    question: string;
-    studentName: string;
-    studentId: string;
-    timestamp: string;
-    answer?: string;
-    answerTimestamp?: string;
+    question: string
+    userName: string
+    userId: string
+    timestamp: string
+    answer?: string
+    answerTimestamp?: string
 }

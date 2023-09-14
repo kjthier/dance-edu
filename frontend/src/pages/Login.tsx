@@ -9,15 +9,12 @@ const Login: React.FC = () => {
         try {
             const response = await axios.post('/api/auth/login', {
                 email,
-                password
-        })
-        
-}
-        catch (error) {
+                password,
+            })
+        } catch (error) {
             console.log(error)
         }
     }
-
 }
 
-    export default Login
+export default Login

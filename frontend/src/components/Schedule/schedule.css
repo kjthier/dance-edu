@@ -2,20 +2,19 @@
     padding: 1em;
     border-radius: 6px;
     box-shadow: var(--main-shadow);
-  }
-  
-/* Target FullCalendar's built-in button classes to style the navigation buttons */
+}
 
+/* Target FullCalendar's built-in button classes to style the navigation buttons */
 .fc-button {
-  background-color: white !important;
-  color: var(--mauve-11) !important;
-  font-size: 14px !important;
-  border: 1px solid var(--mauve-6) !important;
+    background-color: white !important;
+    color: var(--mauve-11) !important;
+    font-size: 14px !important;
+    border: 1px solid var(--mauve-6) !important;
 }
 
 .fc-button:hover {
-  background-color: var(--violet-3) !important;
-  color: var(--mauve-11) !important;
+    background-color: var(--violet-3) !important;
+    color: var(--mauve-11) !important;
 }
 
 .fc-button-active,
@@ -66,15 +65,3 @@
     font-weight: normal !important;
     color: var(--primary-text-color) !important;
 }
-
-
-
-
-
-
-
-
-  
-
-
-

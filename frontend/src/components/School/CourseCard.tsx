@@ -8,10 +8,12 @@ const CourseCard: React.FC<{
     course: ICourse
     isEnrolled?: boolean
     onMoreInfoClick?: () => void
-}> = ({ course, isEnrolled, onMoreInfoClick }) => { 
+}> = ({ course, isEnrolled, onMoreInfoClick }) => {
+
     return (
-        <Box className='course-card' onClick={onMoreInfoClick}> 
+        <Box className='course-card' onClick={onMoreInfoClick}>
             <Box className='course-card-content'>
+
                 <Text as='div' className='course-card-title'>
                     {course.title}
                 </Text>
@@ -48,13 +50,12 @@ const CourseCard: React.FC<{
                             Enrolled
                         </span>
                     ) : (
-                        <button
-                            className='action-label secondary-btn register-btn'
-                        >
+                        <button className='action-label secondary-btn register-btn'>
                             More Info
                         </button>
                     )}
                 </Box>
+                
             </Box>
         </Box>
     )

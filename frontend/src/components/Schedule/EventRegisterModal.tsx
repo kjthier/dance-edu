@@ -1,7 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { Box, Text } from '@radix-ui/themes'
 import { IEvent } from '../../types/ICourse'
-import '../reusable/EventDetailModal.css'
+import '../reusable/EventUnenrollModal.css'
 import React from 'react'
 
 // Define prop types for this component
@@ -16,7 +16,7 @@ const EventRegisterModal: React.FC<EventRegisterModalProps> = ({
     event,
     onClose,
     isOpen,
-    onAddToSchedule
+    onAddToSchedule,
 }) => {
     const { extendedProps, title } = event
 
@@ -85,7 +85,7 @@ const EventRegisterModal: React.FC<EventRegisterModalProps> = ({
                                 )}
                         </>
                     )}
-                    <Dialog.Close 
+                    <Dialog.Close
                         className='action-label primary-btn'
                         onClick={() => {
                             onAddToSchedule()

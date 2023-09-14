@@ -1,12 +1,10 @@
 import * as Dialog from '@radix-ui/react-dialog'
+import React, { useState, useEffect } from 'react'
 import { Box, Text } from '@radix-ui/themes'
-import { IEvent } from '../../types/ICourse'
+import { ICourse } from '../../types/ICourse'
 import './EventUnenrollModal.css'
-import axios from 'axios'
-
-// Define prop types for this component
 interface EventUnenrollModalProps {
-    event: IEvent
+    event: ICourse
     onClose: () => void
     isOpen: boolean
 }
@@ -16,29 +14,63 @@ const EventUnenrollModal: React.FC<EventUnenrollModalProps> = ({
     onClose,
     isOpen,
 }) => {
-    // Assume courseId and userId are either props or obtained some other way
-    const courseId = 'someCourseId'
-    const userId = 'someUserId'
 
-    const handleUnenroll = async () => {
-        try {
-            const response = await axios.put(
-                `https://your-api.com/courses/${courseId}/unenroll/${userId}`,
-                {
-                    isEnrolled: false,
+    const [courses, setCourses] = useState<ICourse[]>([])
+
+    useEffect(() => {
+        fetch('https://dance-edu.onrender.com/courses')
+            .then((response) => response.json())
+            .then((data) => setCourses(data))
+            .catch((error) => console.log('Error fetching courses:', error))
+    }, [])
+
+    const handleUnenroll = () => {
+            console.log('Selected event inside handleUnenroll:', event)
+        
+            if (event && event._id) { // check if event and event._id are available
+                const index = courses.findIndex((course) => course._id === event._id)
+        
+                // check if index is not -1 (meaning a course was found)
+                if (index !== -1) {
+                    const newCourses = [...courses]
+                    newCourses[index].extendedProps.isEnrolled = false
+        
+                    // Update the courses state locally
+                    setCourses(newCourses)
+        
+                    console.log(`Fetch URL: https://dance-edu.onrender.com/courses/${event._id}/unenroll`)
+        
+                    fetch(
+                        `https://dance-edu.onrender.com/courses/${event._id}/unenroll`,
+                        {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ isEnrolled: false })
+                        }
+                    )
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok')
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        console.log('Course unenrolled successfully:', data)
+                    })
+                    .catch((error) => {
+                        console.error('Fetch error:', error)
+                    });
+        
+                    onClose(); // Close the modal
+                } else {
+                    console.error('Course not found in the list.')
                 }
-            )
-
-            if (response.status === 200) {
-                console.log('Successfully unenrolled')
-                onClose()
             } else {
-                console.error('Failed to unenroll', response)
+                console.error('Event or event._id is not available.')
             }
-        } catch (error) {
-            console.error('Error unenrolling course:', error)
-        }
-    }
+    }        
 
     const { extendedProps, title } = event
 

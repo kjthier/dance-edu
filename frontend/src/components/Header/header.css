@@ -11,8 +11,7 @@
     background-color: var(--secondary-bg-color);
     justify-content: center;
 }
-
-.logo img {
+› .logo img {
     width: 200px;
 }
 
@@ -34,113 +33,114 @@
     font-size: 22px !important;
 }
 
-  /* -------------AVATAR------------- */
-  a {
+/* -------------AVATAR------------- */
+a {
     all: unset;
-  }
-  
-  .HoverCardContent {
+}
+
+.HoverCardContent {
     border-radius: 6px;
     padding: 20px;
     width: 300px;
     background-color: white;
-    box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+    box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+        hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
     animation-duration: 400ms;
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform, opacity;
-  }
-  .HoverCardContent[data-side='top'] {
+}
+.HoverCardContent[data-side='top'] {
     animation-name: slideDownAndFade;
-  }
-  .HoverCardContent[data-side='right'] {
+}
+.HoverCardContent[data-side='right'] {
     animation-name: slideLeftAndFade;
-  }
-  .HoverCardContent[data-side='bottom'] {
+}
+.HoverCardContent[data-side='bottom'] {
     animation-name: slideUpAndFade;
-  }
-  .HoverCardContent[data-side='left'] {
+}
+.HoverCardContent[data-side='left'] {
     animation-name: slideRightAndFade;
-  }
-  
-  .HoverCardArrow {
+}
+
+.HoverCardArrow {
     fill: white;
-  }
-  
-  .ImageTrigger {
+}
+
+.ImageTrigger {
     cursor: pointer;
     border-radius: 100%;
     display: inline-block;
-  }
-  .ImageTrigger:focus {
+}
+.ImageTrigger:focus {
     box-shadow: 0 0 0 2px white;
-  }
-  
-  .Image {
+}
+
+.Image {
     display: block;
     border-radius: 100%;
-  }
-  .Image.normal {
+}
+.Image.normal {
     width: 60px;
     height: 60px;
-  }
-  .Image.large {
+}
+.Image.large {
     width: 85px;
     height: 85px;
-  }
-  
-  .Text {
+}
+
+.Text {
     margin: 0;
     color: var(--mauve-12);
     font-size: 15px;
     line-height: 1.5;
-  }
-  .Text.faded {
+}
+.Text.faded {
     color: var(--mauve-10);
-  }
-  .Text.bold {
+}
+.Text.bold {
     font-weight: 500;
-  }
-  
-  @keyframes slideUpAndFade {
+}
+
+@keyframes slideUpAndFade {
     0% {
-      opacity: 0;
-      transform: translateY(2px);
+        opacity: 0;
+        transform: translateY(2px);
     }
     100% {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
-  
-  @keyframes slideRightAndFade {
+}
+
+@keyframes slideRightAndFade {
     0% {
-      opacity: 0;
-      transform: translateX(-2px);
+        opacity: 0;
+        transform: translateX(-2px);
     }
     100% {
-      opacity: 1;
-      transform: translateX(0);
+        opacity: 1;
+        transform: translateX(0);
     }
-  }
-  
-  @keyframes slideDownAndFade {
+}
+
+@keyframes slideDownAndFade {
     0% {
-      opacity: 0;
-      transform: translateY(-2px);
+        opacity: 0;
+        transform: translateY(-2px);
     }
     100% {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
-  
-  @keyframes slideLeftAndFade {
+}
+
+@keyframes slideLeftAndFade {
     0% {
-      opacity: 0;
-      transform: translateX(2px);
+        opacity: 0;
+        transform: translateX(2px);
     }
     100% {
-      opacity: 1;
-      transform: translateX(0);
+        opacity: 1;
+        transform: translateX(0);
     }
-  }
+}

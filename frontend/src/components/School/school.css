@@ -1,23 +1,23 @@
 .myStudio-heading {
-  margin: 0px 0px 10px 0px;
+    margin: 0px 0px 10px 0px;
 }
 
 .course-section-heading {
-  margin: 22px 0px 10px 0px;
+    margin: 22px 0px 10px 0px;
 }
 
 .enrolled-courses {
-  margin-bottom: 30px;
+    margin-bottom: 30px;
 }
 
 .course-section {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .course-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 16px;  /* Adds space between all course cards */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 16px; /* Adds space between all course cards */
 }
 
 /* background: linear-gradient(270deg,rgba(23,25,39,.9) 0,rgba(23,25,39,.72) 48.96%,rgba(23,25,39,.54)); */

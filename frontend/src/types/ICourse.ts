@@ -51,7 +51,7 @@ export interface ICourse {
   allDay?: boolean
   url?: string
   overlap: true
-  editable: false
+  editable: boolean
   extendedProps: {
     level: CourseLevel
     description: string
@@ -77,7 +77,7 @@ export interface IUserEvent {
   allDay?: boolean
   url?: string
   overlap: true
-  editable: true
+  editable: boolean
   extendedProps: {
     description?: string
     longDescription?: string
