@@ -1,13 +1,14 @@
 .header {
     display: grid;
-    gap: 20px;
-    padding: 20px;
+    gap: 0px;
+    padding: 0 20px;
     background-color: var(--primary-bg-color);
 }
 
 .logo {
     display: flex;
-    padding: 20px 0;
+    padding: 10px;
+    margin-bottom: 20px;
     background-color: var(--secondary-bg-color);
     justify-content: center;
 }
@@ -31,6 +32,7 @@
 .quote {
     font-family: 'Caveat', cursive;
     font-size: 22px !important;
+    color: var(--primary-text-color) !important;
 }
 
 /* -------------AVATAR------------- */

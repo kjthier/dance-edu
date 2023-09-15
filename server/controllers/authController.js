@@ -1,19 +1,21 @@
 import User from '../models/user.js'
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt' 
+import bcrypt from 'bcrypt'
 
 export const registerUser = async (req, res) => {
     try {
         const { firstName, lastName, username, email, password } = req.body
-        
+
         // Check if user already exists (email and username should be unique)
-        const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+        const existingUser = await User.findOne({
+            $or: [{ email }, { username }],
+        })
         if (existingUser) {
-            return res.status(409).json({ message: 'User already exists' });
+            return res.status(409).json({ message: 'User already exists' })
         }
 
         // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10)
 
         const newUser = new User({
             firstName,
@@ -21,23 +23,26 @@ export const registerUser = async (req, res) => {
             username,
             email,
             password: hashedPassword,
-        }) // create new user 
+        }) // create new user
 
         await newUser.save() // save the user
 
         // Create JWT token
         if (!process.env.JWT_SECRET) {
-            return res.status(500).json({ message: 'Internal server error' });
+            return res.status(500).json({ message: 'Internal server error' })
         }
-        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
+            expiresIn: '1h',
+        })
+        console.log('New user registered:', newUser)
 
-        res.status(201).json({ userId: newUser._id, token }); // user created successfully
+        res.status(201).json({ userId: newUser._id, token }) // user created successfully
     } catch (error) {
         if (error.code === 11000) {
-            return res.status(409).json({ message: 'User already exists' });
+            return res.status(409).json({ message: 'User already exists' })
         }
-        console.error('An error occurred:', error);
-        res.status(400).json({ message: error.message });
+        console.error('An error occurred:', error)
+        res.status(400).json({ message: error.message })
     }
 }
 

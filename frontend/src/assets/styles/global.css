@@ -3,6 +3,8 @@
 @import '@radix-ui/colors/mauve.css';
 @import '@radix-ui/colors/black-alpha.css';
 @import '@radix-ui/colors/violet.css';
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
 
 :root {
     --primary-bg-color: #ecf0f1;
@@ -21,7 +23,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Comfortaa', cursive;
 }
 
 h2 {

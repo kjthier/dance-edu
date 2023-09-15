@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import {
+    useState,
+    useEffect,
+    useImperativeHandle,
+    forwardRef,
+    useRef,
+} from 'react'
 import { EventClickArg } from '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -9,17 +15,25 @@ import './Schedule.css'
 
 type ScheduleProps = {
     userId: string
+    isSidebarOpen: boolean
 }
 
-const Schedule: React.FC<ScheduleProps> = () => {
-    const [viewMode, setViewMode] = useState('dayGridMonth') // week view by default
+const Schedule = forwardRef((_: ScheduleProps, ref: any) => {
+    const calendarRef = useRef<any>(null)
+    const [viewMode, setViewMode] = useState('dayGridMonth') // month view by default
     const [isModalOpen, setIsModalOpen] = useState(true)
     const [courses, setCourses] = useState<ICourse[]>([])
     const [userEvents, setUserEvents] = useState<IUserEvent[]>([])
     const [clickedEvent, setClickedEvent] = useState<IEvent | null>(null)
 
+    useImperativeHandle(ref, () => ({
+        getApi() {
+            return calendarRef.current.getApi()
+        },
+    }))
+
+    // Fetch data from API when component mounts
     useEffect(() => {
-        // Fetch data from API when component mounts
         fetch('https://dance-edu.onrender.com/courses')
             .then((response) => response.json())
             .then((data) => setCourses(data))
@@ -50,7 +64,6 @@ const Schedule: React.FC<ScheduleProps> = () => {
 
         setIsModalOpen(true) // open the modal
         console.log('New isModalOpen:', true) // Log new isModalOpen state
-
         console.log(clickInfo.event)
     }
 
@@ -70,6 +83,7 @@ const Schedule: React.FC<ScheduleProps> = () => {
                     initialView={viewMode}
                     events={allEvents}
                     eventClick={handleEventClick}
+                    ref={calendarRef}
                     headerToolbar={{
                         left: 'prev,next',
                         center: 'title',
@@ -111,6 +125,6 @@ const Schedule: React.FC<ScheduleProps> = () => {
             </div>
         </div>
     )
-}
+})
 
 export default Schedule

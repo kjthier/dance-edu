@@ -1,14 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
-
 body {
-    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    background: linear-gradient(90deg, #47869e 0%, #37687b 100%);
 }
 
 .login {
     width: 360px;
     padding: 8% 0 0;
     margin: auto;
-    font-family: 'Comfortaa', cursive;
 }
 
 .form {
@@ -20,6 +17,7 @@ body {
     margin: 0 auto 100px;
     padding: 45px;
     text-align: center;
+    box-shadow: var(--main-shadow);
 }
 
 .form input {
@@ -32,7 +30,6 @@ body {
     padding: 15px;
     box-sizing: border-box;
     font-size: 14px;
-    font-family: 'Comfortaa', cursive;
 }
 
 .form input:focus {
@@ -40,10 +37,9 @@ body {
 }
 
 .form button {
-    font-family: 'Comfortaa', cursive;
     text-transform: uppercase;
     outline: 0;
-    background: #4b6cb7;
+    background: #014a77;
     width: 100%;
     border: 0;
     border-radius: 5px;
@@ -62,7 +58,7 @@ body {
 
 .form span {
     font-size: 30px;
-    color: #4b6cb7;
+    color: #014a77;
     margin-bottom: 25px;
     display: block;
 }
@@ -81,4 +77,18 @@ body {
     font-size: 14px;
     margin-top: 0px;
     padding-bottom: 0px;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
