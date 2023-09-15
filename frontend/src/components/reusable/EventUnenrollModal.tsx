@@ -1,12 +1,14 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import React, { useState, useEffect } from 'react'
 import { Box, Text } from '@radix-ui/themes'
-import { ICourse } from '../../types/ICourse'
+import { IEvent } from '../../types/ICourse'
 import './EventUnenrollModal.css'
+
 interface EventUnenrollModalProps {
-    event: ICourse
-    onClose: () => void
+    event: IEvent
     isOpen: boolean
+    onClose: () => void
+    onRemoveFromSchedule: () => void
 }
 
 const EventUnenrollModal: React.FC<EventUnenrollModalProps> = ({
@@ -14,63 +16,65 @@ const EventUnenrollModal: React.FC<EventUnenrollModalProps> = ({
     onClose,
     isOpen,
 }) => {
-
-    const [courses, setCourses] = useState<ICourse[]>([])
+    const [events, setEvents] = useState<IEvent[]>([])
 
     useEffect(() => {
-        fetch('https://dance-edu.onrender.com/courses')
-            .then((response) => response.json())
-            .then((data) => setCourses(data))
-            .catch((error) => console.log('Error fetching courses:', error))
+        const fetchCourses = async () => {
+            try {
+                const response = await fetch(
+                    'https://dance-edu.onrender.com/courses'
+                )
+                const data = await response.json()
+                setEvents(data)
+            } catch (error) {
+                console.error('Error fetching courses:', error)
+            }
+        }
+
+        fetchCourses()
     }, [])
 
-    const handleUnenroll = () => {
-            console.log('Selected event inside handleUnenroll:', event)
-        
-            if (event && event._id) { // check if event and event._id are available
-                const index = courses.findIndex((course) => course._id === event._id)
-        
-                // check if index is not -1 (meaning a course was found)
-                if (index !== -1) {
-                    const newCourses = [...courses]
-                    newCourses[index].extendedProps.isEnrolled = false
-        
-                    // Update the courses state locally
-                    setCourses(newCourses)
-        
-                    console.log(`Fetch URL: https://dance-edu.onrender.com/courses/${event._id}/unenroll`)
-        
-                    fetch(
-                        `https://dance-edu.onrender.com/courses/${event._id}/unenroll`,
+    const handleUnenroll = async () => {
+        const { _id } = event
+
+        if (_id) {
+            const index = events.findIndex((e) => e._id === _id)
+
+            if (index !== -1) {
+                const newEvents = [...events]
+                newEvents[index].extendedProps.isEnrolled = false
+                setEvents(newEvents)
+
+                try {
+                    const response = await fetch(
+                        `https://dance-edu.onrender.com/courses/${_id}/unenroll`,
                         {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json',
                             },
-                            body: JSON.stringify({ isEnrolled: false })
+                            body: JSON.stringify({ isEnrolled: false }),
                         }
                     )
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok')
-                        }
-                        return response.json();
-                    })
-                    .then((data) => {
-                        console.log('Course unenrolled successfully:', data)
-                    })
-                    .catch((error) => {
-                        console.error('Fetch error:', error)
-                    });
-        
-                    onClose(); // Close the modal
-                } else {
-                    console.error('Course not found in the list.')
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok')
+                    }
+
+                    const data = await response.json()
+                    console.log('Course unenrolled successfully:', data)
+                } catch (error) {
+                    console.error('Fetch error:', error)
                 }
+
+                onClose()
             } else {
-                console.error('Event or event._id is not available.')
+                console.error('Course not found in the list.')
             }
-    }        
+        } else {
+            console.error('Event or event._id is not available.')
+        }
+    }
 
     const { extendedProps, title } = event
 

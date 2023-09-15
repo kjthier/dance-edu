@@ -53,7 +53,7 @@ export interface ICourse {
   overlap: true
   editable: boolean
   extendedProps: {
-    level: CourseLevel
+    level?: CourseLevel
     description: string
     longDescription: string
     teacher?: Teacher
