@@ -12,36 +12,12 @@ const Auth: React.FC = () => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
 
-    // hardcoded user as logged in for dev
-    // useEffect(() => {
-    //     const autoLogin = async () => {
-    //         if (process.env.NODE_ENV === 'development') {
-    //             const baseURL = 'https://dance-edu.onrender.com'
-    //             const endpoint = '/api/auth/login'
+    // hardcoded user as logged in for dev goes here
 
-    //             // Your test user's credentials
-    //             const testEmail = 'karint@example.com'
-    //             const testPassword = '1234'
-
-    //             try {
-    //                 const response = await axios.post(`${baseURL}${endpoint}`, {
-    //                     email: testEmail,
-    //                     password: testPassword,
-    //                 })
-
-    //                 if (response.data.token) {
-    //                     localStorage.setItem('authToken', response.data.token)
-    //                     localStorage.setItem('userId', response.data.userId)
-    //                     navigate(`/student/${response.data.userId}/schedule`)
-    //                 }
-    //             } catch (error) {
-    //                 console.log('Auto-login failed:', error)
-    //             }
-    //         }
-    //     }
-
-    //     autoLogin()
-    // }, [navigate])
+    interface IResponseData {
+        token?: string
+        userId?: string
+    }
 
     const handleAuth = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -52,15 +28,38 @@ const Auth: React.FC = () => {
                 ? { email, password }
                 : { firstName, lastName, username, email, password }
 
-            const response = await axios.post(`${baseURL}${endpoint}`, payload)
+            console.log('Payload:', payload) // Debugging line
 
-            if (response.data.token) {
-                localStorage.setItem('authToken', response.data.token) // store received JWT in local storage
-                localStorage.setItem('userId', response.data.userId) // store received userId in local storage
+            const response = await axios.post<IResponseData>(
+                `${baseURL}${endpoint}`,
+                payload
+            )
+
+            if (response.data.token && response.data.userId) {
+                localStorage.setItem('authToken', response.data.token)
+                localStorage.setItem('userId', response.data.userId)
                 navigate(`/student/${response.data.userId}/schedule`)
+            } else {
+                console.log('Missing token or userId in the response')
+                console.log('Response data:', response.data)  // Add this line for debugging
+
             }
-        } catch (error) {
-            console.log('An error occured during login:', error)
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                // Error returned from axios request
+                if (error.response) {
+                    console.log('Error status:', error.response.status)
+                    console.log('Error data:', error.response.data)
+                } else {
+                    console.log(
+                        'An error occurred during the request:',
+                        error.message
+                    )
+                }
+            } else {
+                // Something else happened
+                console.log('An unknown error occurred:', error)
+            }
         }
     }
 
@@ -152,3 +151,33 @@ const Auth: React.FC = () => {
 }
 
 export default Auth
+
+// useEffect(() => {
+//     const autoLogin = async () => {
+//         if (process.env.NODE_ENV === 'development') {
+//             const baseURL = 'https://dance-edu.onrender.com'
+//             const endpoint = '/api/auth/login'
+
+//             // Your test user's credentials
+//             const testEmail = 'karint@example.com'
+//             const testPassword = '1234'
+
+//             try {
+//                 const response = await axios.post(`${baseURL}${endpoint}`, {
+//                     email: testEmail,
+//                     password: testPassword,
+//                 })
+
+//                 if (response.data.token) {
+//                     localStorage.setItem('authToken', response.data.token)
+//                     localStorage.setItem('userId', response.data.userId)
+//                     navigate(`/student/${response.data.userId}/schedule`)
+//                 }
+//             } catch (error) {
+//                 console.log('Auto-login failed:', error)
+//             }
+//         }
+//     }
+
+//     autoLogin()
+// }, [navigate])

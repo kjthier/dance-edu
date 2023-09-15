@@ -12,8 +12,8 @@ const userSchema = new mongoose.Schema({
 // Hash the password before saving the user model
 userSchema.pre('save', function (next) {
     if (this.isModified('password')) {
-        const salt = bcrypt.genSaltSync(10)
-        this.password = bcrypt.hashSync(this.password, salt)
+        const salt = bcrypt.genSalt(10)
+        this.password = bcrypt.hash(this.password, salt)
     }
     next()
 })

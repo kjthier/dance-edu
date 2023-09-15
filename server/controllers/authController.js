@@ -3,20 +3,41 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt' 
 
 export const registerUser = async (req, res) => {
-    // Destructure request body to get username, email, and password
     try {
         const { firstName, lastName, username, email, password } = req.body
+        
+        // Check if user already exists (email and username should be unique)
+        const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+        if (existingUser) {
+            return res.status(409).json({ message: 'User already exists' });
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         const newUser = new User({
             firstName,
             lastName,
             username,
             email,
-            password,
+            password: hashedPassword,
         }) // create new user 
+
         await newUser.save() // save the user
-        res.status(201).json(newUser) // user created successfully
+
+        // Create JWT token
+        if (!process.env.JWT_SECRET) {
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        res.status(201).json({ userId: newUser._id, token }); // user created successfully
     } catch (error) {
-        res.status(400).json({ message: error.message })
+        if (error.code === 11000) {
+            return res.status(409).json({ message: 'User already exists' });
+        }
+        console.error('An error occurred:', error);
+        res.status(400).json({ message: error.message });
     }
 }
 
