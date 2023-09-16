@@ -1,5 +1,6 @@
 .course-card {
-    max-width: 200px;
+    max-width: 250px;
+    min-height: 270px;
     border: 1px solid var(--border-color);
     border-radius: 20px;
     overflow: hidden;
@@ -10,6 +11,7 @@
     background-image: url('../../assets/course-card-img.jpg');
     background-size: cover;
     background-position: center;
+    box-shadow: var(--main-shadow);
 }
 
 .course-card-content {
@@ -19,18 +21,20 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    position:relative;
 }
 
 .course-card-title {
-    font-size: 16px;
-    margin-bottom: 10px;
-    color: var(--primary-text-color);
+    font-size: 18px;
+    margin: 6px 0px 15px 0px;
+    color: #37687b;
+    font-weight: bold;
+
 }
 
 .course-card-programType {
     font-size: 13px;
     color: var(--secondary-text-color);
-    font-style: italic;
     margin-bottom: 10px;
 }
 
@@ -44,6 +48,8 @@
     font-size: 13px;
     color: var(--tertiary-text-color);
     margin-top: 10px;
+        font-style: italic;
+
 }
 
 .course-card-level-type {
@@ -52,9 +58,14 @@
 }
 
 .course-card-level,
+.course-card-location,
 .course-card-time {
     font-size: 12px;
     color: var(--primary-text-color);
+}
+
+.course-card-time {
+    margin-top: 6px;
 }
 
 .course-card-level {
@@ -79,12 +90,14 @@
 }
 
 .enrolled-label {
-    bottom: 10px;
-    left: 10px;
+    position:absolute;
+    bottom: 15px;
+    right: 20px;
     font-size: 14px;
     font-style: italic;
     font-weight: bold;
-    color: var(--quaternary-text-color);
+    color: #0169aa;
+
 }
 
 @media (max-width: 768px) {

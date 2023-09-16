@@ -4,7 +4,8 @@ import { ICourse } from '../../types/ICourse'
 import CourseCard from './CourseCard'
 import EventRegisterModal from '../Schedule/EventRegisterModal'
 import EventUnenrollModal from '../reusable/EventUnenrollModal'
-import './School.css'
+import { CaretRightIcon } from '@radix-ui/react-icons'
+import './Studio.css'
 
 type CoursesDisplayedProps = {
     courseId: string
@@ -29,7 +30,7 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
     const [isUnenrollModalOpen, setIsUnenrollModalOpen] = useState(false)
     const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
 
-    const handleMoreInfoClick = (course: ICourse) => {
+    const handleCourseCardClick = (course: ICourse) => {
         setSelectedCourse(course)
         if (course.extendedProps.isEnrolled) {
             setIsUnenrollModalOpen(true)
@@ -120,28 +121,30 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
         setIsUnenrollModalOpen(false)
     }
 
-    const renderEnrolled = (filterFunc: (course: ICourse) => boolean) =>  (
+    const renderEnrolled = (filterFunc: (course: ICourse) => boolean) =>
         courses
-        ? courses
-            .filter(filterFunc)
-            .map((course) => (
-                <CourseCard
-                    key={course._id}
-                    course={course}
-                    onMoreInfoClick={() => handleMoreInfoClick(course)}
-                />
-            ))
-        : null
-    )
-    
-       
+            ? courses
+                  .filter(filterFunc)
+                  .map((course) => (
+                      <CourseCard
+                          key={course._id}
+                          course={course}
+                          isEnrolled={!!course.extendedProps.isEnrolled}
+                          onCourseCardClick={() =>
+                              handleCourseCardClick(course)
+                          }
+                      />
+                  ))
+            : null
 
     const renderCourseSection = (
         title: string,
         filterFunc: (course: ICourse) => boolean
     ) => (
         <Box className='available-courses'>
-            <h3 className='course-section'>{title}</h3>
+            <h3 className='course-section'>
+                {title} <CaretRightIcon />
+            </h3>
             <Box className='course-grid'>{renderEnrolled(filterFunc)}</Box>
         </Box>
     )
@@ -160,16 +163,15 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
 
             <Box className='available-courses'>
                 <h2 className='course-section-heading'>Live Studio</h2>
-                <h3 className='course-section'>Courses</h3>
-                <Box className='course-grid'>
-                    {renderEnrolled(
-                        (course) =>
-                            !course.extendedProps.isEnrolled &&
-                            course.extendedProps.programType === 'Course' &&
-                            course.extendedProps.studioType === 'Live'
-                    )}
-                </Box>
             </Box>
+
+            {renderCourseSection(
+                'Courses',
+                (course) =>
+                    !course.extendedProps.isEnrolled &&
+                    course.extendedProps.programType === 'Course' &&
+                    course.extendedProps.studioType === 'Live'
+            )}
 
             {renderCourseSection(
                 'Classes',
@@ -205,6 +207,9 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
 
             {selectedCourse && (
                 <>
+                    {(isRegisterModalOpen || isUnenrollModalOpen) && (
+                        <div className='backdrop'></div>
+                    )}
                     {selectedCourse.extendedProps.isEnrolled ? (
                         <EventUnenrollModal
                             event={selectedCourse}

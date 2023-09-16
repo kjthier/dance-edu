@@ -1,7 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { Box, Text } from '@radix-ui/themes'
 import { IEvent } from '../../types/ICourse'
-import '../reusable/EventUnenrollModal.css'
+import '../../assets/styles/EventModals.css'
 import React from 'react'
 
 // Define prop types for this component

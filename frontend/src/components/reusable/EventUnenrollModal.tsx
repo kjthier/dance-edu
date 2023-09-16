@@ -2,7 +2,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import React, { useState, useEffect } from 'react'
 import { Box, Text } from '@radix-ui/themes'
 import { IEvent } from '../../types/ICourse'
-import './EventUnenrollModal.css'
+import '../../assets/styles/EventModals.css'
 
 interface EventUnenrollModalProps {
     event: IEvent
@@ -144,7 +144,7 @@ const EventUnenrollModal: React.FC<EventUnenrollModalProps> = ({
                         </>
                     )}
                     <Dialog.Close
-                        className='action-label secondary-btn'
+                        className='action-label primary-btn'
                         onClick={handleUnenroll}
                     >
                         Unenroll

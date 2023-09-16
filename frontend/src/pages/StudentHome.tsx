@@ -5,7 +5,7 @@ import { Box } from '@radix-ui/themes'
 //  -------------COMPONENTS-------------
 import Header from '../components/Header/Header'
 import Sidebar from '../components/Sidebar/Sidebar'
-import CoursesDisplayed from '../components/School/School'
+import CoursesDisplayed from '../components/School/Studio'
 import Questions from '../components/Questions/Questions'
 import Schedule from '../components/Schedule/Schedule'
 

@@ -10,7 +10,7 @@
 /* Container styling (dialog.content) */
 .event-modal {
     z-index: 1000;
-    background-color: white;
+    background-color: #f6fafb;
     margin: auto;
     padding: 20px;
     position: fixed;

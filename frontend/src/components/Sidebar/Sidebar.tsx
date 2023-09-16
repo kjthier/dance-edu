@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { RowsIcon, Cross1Icon } from '@radix-ui/react-icons'
 import './Sidebar.css'
@@ -26,7 +26,7 @@ const Sidebar: React.FC<SidebarProps> = ({ userId, isOpen, toggleSidebar }) => {
                             </Link>
                         </li>
                         <li>
-                            <Link to={`/student/${userId}/school`}>School</Link>
+                            <Link to={`/student/${userId}/school`}>Studio</Link>
                         </li>
                         <li>
                             <Link to={`/student/${userId}/schedule`}>

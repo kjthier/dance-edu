@@ -1,0 +1,34 @@
+.myStudio-heading {
+    margin: 10px 0px 20px 0px;
+}
+
+.course-section-heading {
+    margin: 22px 0px 20px 0px;
+}
+
+.enrolled-courses {
+    margin-bottom: 30px;
+}
+
+.course-section {
+    margin: 20px 0px 10px;
+    color: var(--primary-text-color);
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px; /* Adds space between all course cards */
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: brightness(85%);
+    z-index: 1; /* to place it behind the modal */
+}
+
+/* background: linear-gradient(270deg,rgba(23,25,39,.9) 0,rgba(23,25,39,.72) 48.96%,rgba(23,25,39,.54)); */

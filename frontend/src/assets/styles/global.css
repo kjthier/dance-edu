@@ -5,7 +5,6 @@
 @import '@radix-ui/colors/violet.css';
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
 
-
 :root {
     --primary-bg-color: #ecf0f1;
     --secondary-bg-color: #f6fafb;
@@ -28,7 +27,7 @@
 
 h2 {
     font-weight: 450;
-    font-size: 22px;
+    font-size: 26px;
 }
 
 h3 {

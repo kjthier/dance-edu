@@ -40,8 +40,11 @@ const Schedule = forwardRef((_: ScheduleProps, ref: any) => {
             .catch((error) => console.log('Error fetching courses:', error))
     }, [])
 
-    // merge courses & custom events for fullcalendar
-    const allEvents: IEvent[] = [...courses, ...userEvents]
+    // Filter courses where isEnrolled is true
+    const enrolledCourses = courses.filter(course => course.extendedProps.isEnrolled === true);
+
+    // merge enrolled courses & custom events for fullcalendar
+    const allEvents: IEvent[] = [...enrolledCourses, ...userEvents];
 
     const handleEventClick = (clickInfo: EventClickArg) => {
         const event: IEvent = {
