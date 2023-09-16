@@ -10,6 +10,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ userId }) => {
+    console.log('userId: ', userId)
     const [firstName, setFirstName] = useState<string | null>(null)
 
     useEffect(() => {

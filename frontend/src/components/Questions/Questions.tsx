@@ -16,8 +16,8 @@ const Questions: React.FC<QuestionsProps> = ({ userId }) => {
     useEffect(() => {
         const fetchStudentData = async () => {
             try {
-                const response = await axios.get(`/api/student/${userId}`)
-                setUserName(response.data.name)
+                const response = await axios.get(`https://dance-edu.onrender.com/api/auth/user/${userId}`)
+                setUserName(response.data.firstName)
             } catch (error) {
                 console.error("An error occurred while fetching student data:", error)
             }
