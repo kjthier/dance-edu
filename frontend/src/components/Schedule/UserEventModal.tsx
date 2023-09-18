@@ -85,6 +85,10 @@ const UserEventModal: React.FC<UserEventModalProps> = ({
 
         // Add to local state to show on calendar
         setUserEvents([...userEvents, savedEvent])
+
+        console.log('New saved event:', savedEvent);
+console.log('Updated User Events:', [...userEvents, savedEvent]);
+
     }
 
     return isOpen ? (

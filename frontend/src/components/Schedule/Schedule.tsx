@@ -38,7 +38,10 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
     useEffect(() => {
         fetch('https://dance-edu.onrender.com/courses')
             .then((response) => response.json())
-            .then((data) => setCourses(data))
+            .then((data) => {
+                console.log('Fetched courses:', data)
+                setCourses(data)
+            })
             .catch((error) => console.log('Error fetching courses:', error))
     }, [])
 
@@ -46,7 +49,11 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
     useEffect(() => {
         fetch(`https://dance-edu.onrender.com/userEvents`)
             .then((response) => response.json())
-            .then((data: IUserEvent[]) => setUserEvents(data))
+            .then((data) => {
+                console.log('Fetched user events:', data)
+                setUserEvents(data)
+            })
+            .catch((error) => console.log('Error fetching user events:', error))
     }, [])
 
     // Filter courses where isEnrolled is true
