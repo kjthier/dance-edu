@@ -42,7 +42,7 @@ const StudentHome: React.FC = () => {
                         <Routes>
                             <Route
                                 path='school'
-                                element={<CoursesDisplayed userId={userId!} />}
+                                element={<CoursesDisplayed />}
                             />
                             <Route
                                 path='questions'

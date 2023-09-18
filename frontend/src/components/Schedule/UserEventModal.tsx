@@ -32,7 +32,6 @@ const UserEventModal: React.FC<UserEventModalProps> = ({
         location: Location.ONLINE,
         studioType: StudioType.LIVE,
         programType: ProgramType.CLASS,
-        // ... other fields
     })
 
     const handleChange = (e) => {

@@ -18,15 +18,14 @@ type ScheduleProps = {
     isSidebarOpen: boolean
 }
 
-const Schedule = forwardRef((_: ScheduleProps, ref: any) => {
+const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
     const calendarRef = useRef<any>(null)
     const [viewMode, setViewMode] = useState('dayGridMonth') // month view by default
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [courses, setCourses] = useState<ICourse[]>([])
     const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
     const [isUserEventModalOpen, setIsUserEventModalOpen] = useState(false)
-    const [userEvents, setUserEvents] = useState<IUserEvent[]>([]);
-
+    const [userEvents, setUserEvents] = useState<IUserEvent[]>([])
 
     // This hook allows parent component (StudentHome.tsx) to interact with the FullCalendar API by using the ref passed here
     useImperativeHandle(ref, () => ({
@@ -47,8 +46,8 @@ const Schedule = forwardRef((_: ScheduleProps, ref: any) => {
     useEffect(() => {
         fetch(`https://dance-edu.onrender.com/userEvents`)
             .then((response) => response.json())
-            .then((data: IUserEvent[]) => setUserEvents(data));
-        }, []);
+            .then((data: IUserEvent[]) => setUserEvents(data))
+    }, [])
 
     // Filter courses where isEnrolled is true
     const enrolledCourses = courses
@@ -83,10 +82,12 @@ const Schedule = forwardRef((_: ScheduleProps, ref: any) => {
                 </button>
                 {isUserEventModalOpen && (
                     <UserEventModal
+                        userId={userId}
                         isOpen={isUserEventModalOpen}
                         onClose={() => setIsUserEventModalOpen(false)}
                         userEvents={userEvents}
-                        setUserEvents={setUserEvents}                    />
+                        setUserEvents={setUserEvents}
+                    />
                 )}
             </div>
             <div className='schedule-container'>

@@ -77,7 +77,7 @@ export interface IUserEvent {
   allDay?: boolean
   url?: string
   overlap: true
-  editable: boolean
+  editable: true
   extendedProps: {
     description?: string
     longDescription?: string
