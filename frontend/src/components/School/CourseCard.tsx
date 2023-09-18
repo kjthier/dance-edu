@@ -10,6 +10,7 @@ const CourseCard: React.FC<{
     isEnrolled?: boolean
     onCourseCardClick?: () => void
 }> = ({ course, isEnrolled, onCourseCardClick }) => {
+    
     const startDate = new Date(course.start)
     const formattedDate = `${startDate.getDate()}/${startDate.getMonth() + 1}`
 

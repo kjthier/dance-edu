@@ -1,81 +1,65 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import React, { useState, useEffect } from 'react'
 import { Box, Text } from '@radix-ui/themes'
-import { IEvent } from '../../types/ICourse'
+import { ICourse } from '../../types/ICourse'
 import '../../assets/styles/EventModals.css'
 
 interface EventUnenrollModalProps {
-    event: IEvent
+    event: ICourse
     isOpen: boolean
     onClose: () => void
-    onRemoveFromSchedule: () => void
+    setCourses: React.Dispatch<React.SetStateAction<ICourse[]>>
 }
 
 const EventUnenrollModal: React.FC<EventUnenrollModalProps> = ({
     event,
     onClose,
     isOpen,
+    setCourses,
 }) => {
-    const [events, setEvents] = useState<IEvent[]>([])
-
-    useEffect(() => {
-        const fetchCourses = async () => {
-            try {
-                const response = await fetch(
-                    'https://dance-edu.onrender.com/courses'
-                )
-                const data = await response.json()
-                setEvents(data)
-            } catch (error) {
-                console.error('Error fetching courses:', error)
-            }
-        }
-
-        fetchCourses()
-    }, [])
-
     const handleUnenroll = async () => {
         const { _id } = event
 
         if (_id) {
-            const index = events.findIndex((e) => e._id === _id)
-
-            if (index !== -1) {
-                const newEvents = [...events]
-                newEvents[index].extendedProps.isEnrolled = false
-                setEvents(newEvents)
-
-                try {
-                    const response = await fetch(
-                        `https://dance-edu.onrender.com/courses/${_id}/unenroll`,
-                        {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ isEnrolled: false }),
-                        }
-                    )
-
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok')
+            try {
+                // API request to unenroll
+                const response = await fetch(
+                    `https://dance-edu.onrender.com/courses/${_id}/unenroll`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ isEnrolled: false }),
                     }
+                )
 
-                    const data = await response.json()
-                    console.log('Course unenrolled successfully:', data)
-                } catch (error) {
-                    console.error('Fetch error:', error)
+                if (!response.ok) {
+                    throw new Error('Network response was not ok')
                 }
 
+                // Update the local state of courses
+                setCourses((prevCourses) =>
+                    prevCourses.map((course) =>
+                        course._id === _id
+                            ? {
+                                  ...course,
+                                  extendedProps: {
+                                      ...course.extendedProps,
+                                      isEnrolled: false,
+                                  },
+                              }
+                            : course
+                    )
+                )
+
                 onClose()
-            } else {
-                console.error('Course not found in the list.')
+            } catch (error) {
+                console.error('Fetch error:', error)
             }
-        } else {
-            console.error('Event or event._id is not available.')
         }
     }
-
+    
+    // destructure event to use its properties in the return
     const { extendedProps, title } = event
 
     const formatDate = (isoDateString: string): string => {

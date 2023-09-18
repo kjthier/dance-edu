@@ -1,23 +1,65 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { Box, Text } from '@radix-ui/themes'
-import { IEvent } from '../../types/ICourse'
+import { ICourse } from '../../types/ICourse'
 import '../../assets/styles/EventModals.css'
 import React from 'react'
 
-// Define prop types for this component
 interface EventRegisterModalProps {
-    event: IEvent
+    event: ICourse
     onClose: () => void
     isOpen: boolean
-    onAddToSchedule: () => void
+    setCourses: React.Dispatch<React.SetStateAction<ICourse[]>>
 }
 
 const EventRegisterModal: React.FC<EventRegisterModalProps> = ({
     event,
     onClose,
     isOpen,
-    onAddToSchedule,
+    setCourses,
 }) => {
+    const handleRegister = async () => {
+        const { _id } = event
+        if (_id) {
+            try {
+                // API request to enroll
+                const response = await fetch(
+                    `https://dance-edu.onrender.com/courses/${_id}/enroll`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ isEnrolled: true }),
+                    }
+                )
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok')
+                }
+
+                // Update the local state of courses
+                setCourses((prevCourses) =>
+                    prevCourses.map((course) =>
+                        course._id === _id
+                            ? {
+                                  ...course,
+                                  extendedProps: {
+                                      ...course.extendedProps,
+                                      isEnrolled: true,
+                                  },
+                              }
+                            : course
+                    )
+                )
+
+                onClose()
+            } catch (error) {
+                console.error('Fetch error:', error)
+            }
+        }
+    }
+
+    // destructure event to use its properties in the return
     const { extendedProps, title } = event
 
     const formatDate = (isoDateString: string): string => {
@@ -87,10 +129,7 @@ const EventRegisterModal: React.FC<EventRegisterModalProps> = ({
                     )}
                     <Dialog.Close
                         className='action-label primary-btn'
-                        onClick={() => {
-                            onAddToSchedule()
-                            onClose()
-                        }}
+                        onClick={handleRegister}
                     >
                         Register
                     </Dialog.Close>

@@ -14,17 +14,28 @@ const Questions: React.FC<QuestionsProps> = ({ userId }) => {
     const [userName, setUserName] = useState<string | null>(null)
 
     useEffect(() => {
+        // fetch questions from local storage - change later to server side
+        const savedQuestions = localStorage.getItem('questions')
+        if (savedQuestions) {
+            setQuestions(JSON.parse(savedQuestions))
+        }
+
         const fetchStudentData = async () => {
             try {
-                const response = await axios.get(`https://dance-edu.onrender.com/api/auth/user/${userId}`)
+                const response = await axios.get(
+                    `https://dance-edu.onrender.com/api/auth/user/${userId}`
+                )
                 setUserName(response.data.firstName)
             } catch (error) {
-                console.error("An error occurred while fetching student data:", error)
+                console.error(
+                    'An error occurred while fetching student data:',
+                    error
+                )
             }
         }
-        
+
         fetchStudentData()
-    }, [ userId ])
+    }, [userId])
 
     const handleNewQuestion = (
         question: string,
@@ -37,23 +48,30 @@ const Questions: React.FC<QuestionsProps> = ({ userId }) => {
             userId,
             timestamp: new Date().toLocaleString(),
         }
+
         setQuestions([...questions, newQuestion])
+
+        // to save to local storage
+        const updatedQuestions = [...questions, newQuestion]
+        localStorage.setItem('questions', JSON.stringify(updatedQuestions))
     }
 
     // only to test answers for styling purposes
     const handleTestAnswer = (id: string) => {
-        setQuestions((prevQuestions) =>
-            prevQuestions.map((q) => {
-                if (q.userId === id) {
-                    return {
-                        ...q,
-                        answer: 'This is a test answer.',
-                        answerTimestamp: new Date().toLocaleString(), 
-                    }
+        const updatedQuestions = questions.map((q) => {
+            if (q.userId === id) {
+                return {
+                    ...q,
+                    answer: 'This is a test answer.',
+                    answerTimestamp: new Date().toLocaleString(),
                 }
-                return q
-            })
-        )
+            }
+            return q
+        })
+        setQuestions(updatedQuestions)
+
+        // Save updated questions to local storage
+        localStorage.setItem('questions', JSON.stringify(updatedQuestions))
     }
 
     return (

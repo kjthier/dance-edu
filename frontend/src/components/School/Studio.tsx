@@ -7,29 +7,25 @@ import EventUnenrollModal from '../reusable/EventUnenrollModal'
 import { CaretRightIcon } from '@radix-ui/react-icons'
 import './Studio.css'
 
-type CoursesDisplayedProps = {
-    courseId: string
-}
-
+// fetch all courses from server
 const useFetchCourses = () => {
     const [courses, setCourses] = useState<ICourse[]>([])
-
     useEffect(() => {
         fetch('https://dance-edu.onrender.com/courses')
             .then((response) => response.json())
             .then((data) => setCourses(data))
             .catch((error) => console.log('Error fetching courses:', error))
     }, [])
-
     return { courses, setCourses }
 }
 
-const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
+const CoursesDisplayed: React.FC = () => {
     const { courses, setCourses } = useFetchCourses()
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
     const [isUnenrollModalOpen, setIsUnenrollModalOpen] = useState(false)
     const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
 
+    // When course card is clicked, open a modal
     const handleCourseCardClick = (course: ICourse) => {
         setSelectedCourse(course)
         if (course.extendedProps.isEnrolled) {
@@ -39,88 +35,7 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
         }
     }
 
-    const addToSchedule = () => {
-        if (!selectedCourse) return
-
-        const updatedCourses = courses.map((course) =>
-            course._id === selectedCourse._id
-                ? {
-                      ...course,
-                      extendedProps: {
-                          ...course.extendedProps,
-                          isEnrolled: true,
-                      },
-                  }
-                : course
-        )
-
-        setCourses(updatedCourses)
-
-        fetch(
-            `https://dance-edu.onrender.com/courses/${selectedCourse._id}/enroll`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ isEnrolled: true }),
-            }
-        )
-            .then((response) => {
-                if (!response.ok) throw new Error('Network response was not ok')
-                return response.json()
-            })
-            .then((data) => {
-                console.log('Course updated successfully:', data)
-            })
-            .catch((error) => {
-                console.error('Fetch error:', error)
-            })
-
-        setIsRegisterModalOpen(false)
-    }
-
-    const removeFromSchedule = () => {
-        if (!selectedCourse) return
-
-        const updatedCourses = courses.map((course) =>
-            course._id === selectedCourse._id
-                ? {
-                      ...course,
-                      extendedProps: {
-                          ...course.extendedProps,
-                          isEnrolled: false,
-                      },
-                  }
-                : course
-        )
-
-        setCourses(updatedCourses)
-
-        fetch(
-            `https://dance-edu.onrender.com/courses/${selectedCourse._id}/unenroll`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ isEnrolled: false }),
-            }
-        )
-            .then((response) => {
-                if (!response.ok) throw new Error('Network response was not ok')
-                return response.json()
-            })
-            .then((data) => {
-                console.log('Course unenrolled successfully:', data)
-            })
-            .catch((error) => {
-                console.error('Fetch error:', error)
-            })
-
-        setIsUnenrollModalOpen(false)
-    }
-
+    // Render enrolled courses
     const renderEnrolled = (filterFunc: (course: ICourse) => boolean) =>
         courses
             ? courses
@@ -137,6 +52,7 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                   ))
             : null
 
+    // Render all other courses (not enrolled in)
     const renderCourseSection = (
         title: string,
         filterFunc: (course: ICourse) => boolean
@@ -205,25 +121,35 @@ const CoursesDisplayed: React.FC<CoursesDisplayedProps> = () => {
                     course.extendedProps.programType !== 'Event'
             )}
 
+            {/* based on whether the user is enrolled in the course or not, display the appropriate modal - if enrolled, unenroll modal opens / if unenrolled, register modal opens */}
             {selectedCourse && (
                 <>
                     {(isRegisterModalOpen || isUnenrollModalOpen) && (
                         <div className='backdrop'></div>
                     )}
-                    {selectedCourse.extendedProps.isEnrolled ? (
-                        <EventUnenrollModal
-                            event={selectedCourse}
-                            isOpen={isUnenrollModalOpen}
-                            onClose={() => setIsUnenrollModalOpen(false)}
-                            onRemoveFromSchedule={removeFromSchedule}
-                        />
-                    ) : (
-                        <EventRegisterModal
-                            event={selectedCourse}
-                            isOpen={isRegisterModalOpen}
-                            onClose={() => setIsRegisterModalOpen(false)}
-                            onAddToSchedule={addToSchedule}
-                        />
+                    {selectedCourse && (
+                        <>
+                            {isRegisterModalOpen && (
+                                <EventRegisterModal
+                                    event={selectedCourse}
+                                    isOpen={isRegisterModalOpen}
+                                    onClose={() =>
+                                        setIsRegisterModalOpen(false)
+                                    }
+                                    setCourses={setCourses}
+                                />
+                            )}
+                            {isUnenrollModalOpen && (
+                                <EventUnenrollModal
+                                    event={selectedCourse}
+                                    isOpen={isUnenrollModalOpen}
+                                    onClose={() =>
+                                        setIsUnenrollModalOpen(false)
+                                    }
+                                    setCourses={setCourses}
+                                />
+                            )}
+                        </>
                     )}
                 </>
             )}
