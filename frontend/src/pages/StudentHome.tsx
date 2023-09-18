@@ -8,6 +8,7 @@ import Sidebar from '../components/Sidebar/Sidebar'
 import CoursesDisplayed from '../components/School/Studio'
 import Questions from '../components/Questions/Questions'
 import Schedule from '../components/Schedule/Schedule'
+import Dashboard from '../components/Dashboard/Dashboard'
 
 const StudentHome: React.FC = () => {
     const { userId } = useParams()
@@ -52,6 +53,11 @@ const StudentHome: React.FC = () => {
                                 path='schedule'
                                 element={<Schedule userId={userId!} isSidebarOpen={isSidebarOpen} ref={calendarRef} />}
                                 />
+
+<Route
+                                path='dashboard'
+                                element={<Dashboard />}
+                            />
                         </Routes>
                     </div>
                 </Box>

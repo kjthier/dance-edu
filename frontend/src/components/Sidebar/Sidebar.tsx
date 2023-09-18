@@ -34,11 +34,6 @@ const Sidebar: React.FC<SidebarProps> = ({ userId, isOpen, toggleSidebar }) => {
                             </Link>
                         </li>
                         <li>
-                            <Link to={`/student/${userId}/progress`}>
-                                Progress
-                            </Link>
-                        </li>
-                        <li>
                             <Link to={`/student/${userId}/conditioning`}>
                                 Conditioning
                             </Link>
