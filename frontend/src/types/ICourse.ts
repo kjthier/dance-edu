@@ -81,39 +81,12 @@ export interface IUserEvent {
   extendedProps: {
     description?: string
     longDescription?: string
-    schedule: ISession[] 
+    schedule?: ISession[] 
     location?: Location 
     studioType?: StudioType
     programType?: ProgramType
     isEnrolled: true
     eventType: 'custom'
 
-  }
-}
-
-// merged properties of ICourse and IUserEvent
-export interface IEvent {
-  _id?: string
-  userId?: string
-  title: string
-  start: Date
-  allDay?: boolean
-  url?: string
-  overlap: true
-  editable: boolean
-  extendedProps: {
-    level?: CourseLevel
-    description?: string
-    longDescription?: string
-    teacher?: Teacher
-    image?: string
-    tags?: string[]
-    schedule: ISession[]
-    duration?: string
-    location?: Location
-    studioType?: StudioType
-    programType?: ProgramType
-    isEnrolled?: boolean
-    eventType: 'course' | 'custom'
   }
 }
