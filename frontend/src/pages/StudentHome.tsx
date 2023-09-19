@@ -9,6 +9,7 @@ import CoursesDisplayed from '../components/School/Studio'
 import Questions from '../components/Questions/Questions'
 import Schedule from '../components/Schedule/Schedule'
 import Dashboard from '../components/Dashboard/Dashboard'
+import Footer from '../components/Footer/Footer'
 
 const StudentHome: React.FC = () => {
     const { userId } = useParams()
@@ -26,7 +27,10 @@ const StudentHome: React.FC = () => {
         sidebarElement?.addEventListener('transitionend', handleTransitionEnd)
 
         return () => {
-            sidebarElement?.removeEventListener('transitionend', handleTransitionEnd)
+            sidebarElement?.removeEventListener(
+                'transitionend',
+                handleTransitionEnd
+            )
         }
     }, [])
     const toggleSidebar = () => {
@@ -38,8 +42,16 @@ const StudentHome: React.FC = () => {
             <Header userId={userId!} />
             <div className='main-container'>
                 <Box className='content-wrapper'>
-                <Sidebar userId={userId!} isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-                <div className={`main-content ${isSidebarOpen ? 'open' : 'closed'}`}>
+                    <Sidebar
+                        userId={userId!}
+                        isOpen={isSidebarOpen}
+                        toggleSidebar={toggleSidebar}
+                    />
+                    <div
+                        className={`main-content ${
+                            isSidebarOpen ? 'open' : 'closed'
+                        }`}
+                    >
                         <Routes>
                             <Route
                                 path='school'
@@ -51,17 +63,21 @@ const StudentHome: React.FC = () => {
                             />
                             <Route
                                 path='schedule'
-                                element={<Schedule userId={userId!} isSidebarOpen={isSidebarOpen} ref={calendarRef} />}
-                                />
-
-<Route
-                                path='dashboard'
-                                element={<Dashboard />}
+                                element={
+                                    <Schedule
+                                        userId={userId!}
+                                        isSidebarOpen={isSidebarOpen}
+                                        ref={calendarRef}
+                                    />
+                                }
                             />
+
+                            <Route path='dashboard' element={<Dashboard />} />
                         </Routes>
                     </div>
                 </Box>
             </div>
+            <Footer />
         </div>
     )
 }

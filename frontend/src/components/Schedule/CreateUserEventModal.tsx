@@ -7,20 +7,17 @@ import {
 } from '../../types/ICourse'
 import '../../assets/styles/EventModals.css'
 
-interface UserEventModalProps {
+interface CreateUserEventModalProps {
     userId: string
     isOpen: boolean
     onClose: () => void
-    event?: IUserEvent
-    userEvents: IUserEvent[]
     setUserEvents: React.Dispatch<React.SetStateAction<IUserEvent[]>>
 }
 
-const UserEventModal: React.FC<UserEventModalProps> = ({
+const CreateUserEventModal: React.FC<CreateUserEventModalProps> = ({
     userId,
     isOpen,
     onClose,
-    userEvents,
     setUserEvents,
 }) => {
     const [formData, setFormData] = useState({
@@ -44,9 +41,32 @@ const UserEventModal: React.FC<UserEventModalProps> = ({
         })
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    const addUserEvent = async (newEvent: IUserEvent) => {
+        let response
+        try {
+            response = await fetch(
+                `https://dance-edu.onrender.com/userEvents`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newEvent),
+                }
+            )
 
+            if (!response.ok) {
+                throw new Error('Network response was not ok')
+            }
+
+            const savedEvent: IUserEvent = await response.json()
+            setUserEvents((prevEvents) => [...prevEvents, savedEvent])
+        } catch (error) {
+            console.error('Error:', error)
+        }
+    }
+
+    const createEvent = async () => {
         const newEvent: IUserEvent = {
             userId,
             title: formData.title,
@@ -69,41 +89,17 @@ const UserEventModal: React.FC<UserEventModalProps> = ({
         onClose()
     }
 
-    const addUserEvent = async (newEvent: IUserEvent) => {
-        let response
-
-        try {
-            response = await fetch(
-                `https://dance-edu.onrender.com/userEvents`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(newEvent),
-                }
-            )
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok')
-            }
-
-            const savedEvent: IUserEvent = await response.json()
-            const updatedUserEvents = [...userEvents, savedEvent]
-
-            setUserEvents(updatedUserEvents)
-            console.log('Updated user events: ', updatedUserEvents) // Log to debug
-        } catch (error) {
-            console.error('Error:', error)
-        }
-    }
-
     return isOpen ? (
         <div className='dialog-overlay'>
             <div className='event-modal'>
-                <form onSubmit={handleSubmit} className='event-modal-content'>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        createEvent()
+                    }}
+                    className='event-modal-content'
+                >
                     <div className='event-modal-title'>Add User Event</div>
-
                     <input
                         className='event-modal-description'
                         name='title'
@@ -149,7 +145,6 @@ const UserEventModal: React.FC<UserEventModalProps> = ({
                         onChange={handleChange}
                         placeholder='Long Description'
                     />
-
                     {Object.values(Location).map((loc) => (
                         <label key={loc}>
                             <input
@@ -185,8 +180,7 @@ const UserEventModal: React.FC<UserEventModalProps> = ({
                             />
                             {type}
                         </label>
-                    ))}
-
+                    ))}{' '}
                     <button type='submit'>Save</button>
                     <button onClick={onClose}>Close</button>
                 </form>
@@ -195,4 +189,4 @@ const UserEventModal: React.FC<UserEventModalProps> = ({
     ) : null
 }
 
-export default UserEventModal
+export default CreateUserEventModal

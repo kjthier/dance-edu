@@ -9,13 +9,54 @@ import { EventClickArg } from '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import EventUnenrollModal from '../reusable/EventUnenrollModal'
-import UserEventModal from './UserEventModal'
+import CreateUserEventModal from './CreateUserEventModal'
+import EditUserEventModal from './EditUserEventModal'
 import { ICourse, IUserEvent } from '../../types/ICourse'
 import './Schedule.css'
 
 type ScheduleProps = {
     userId: string
     isSidebarOpen: boolean
+}
+
+// utility function for expandCoursesToEvents()
+const convertTo24Hour = (time) => {
+    const [mainTime, period] = time.split(' ')
+    let [hours, minutes] = mainTime.split(':')
+
+    if (period === 'PM' && +hours !== 12) {
+        hours = +hours + 12
+    }
+
+    if (period === 'AM' && +hours === 12) {
+        hours = '00'
+    }
+
+    return `${hours}:${minutes}`
+}
+
+// to render all instances of a course based on its schedule
+const expandCoursesToEvents = (courses: ICourse[]): any[] => {
+    return courses.flatMap((course) => {
+        return course.extendedProps.schedule.map((session) => {
+            const startTime24hr = convertTo24Hour(session.startTime)
+            const endTime24hr = convertTo24Hour(session.endTime)
+
+            const eventStartDate = new Date(`${session.date}T${startTime24hr}`)
+            const eventEndDate = new Date(`${session.date}T${endTime24hr}`)
+
+            console.log('Converted startTime:', startTime24hr)
+            console.log('Converted endTime:', endTime24hr)
+            console.log('eventStartDate:', eventStartDate)
+            console.log('eventEndDate:', eventEndDate)
+
+            return {
+                ...course,
+                start: eventStartDate,
+                end: eventEndDate,
+            }
+        })
+    })
 }
 
 const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
@@ -41,7 +82,6 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
         fetch('https://dance-edu.onrender.com/courses')
             .then((response) => response.json())
             .then((data) => {
-                console.log('Fetched courses:', data)
                 setCourses(data)
             })
             .catch((error) => console.log('Error fetching courses:', error))
@@ -52,7 +92,6 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
         fetch(`https://dance-edu.onrender.com/userEvents`)
             .then((response) => response.json())
             .then((data) => {
-                console.log('Fetched user events:', data)
                 setUserEvents(data)
             })
             .catch((error) => console.log('Error fetching user events:', error))
@@ -67,6 +106,10 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
             id: course._id,
         }))
 
+    // Expand courses into multiple events based on their sessions
+    const expandedCourses = expandCoursesToEvents(enrolledCourses)
+    console.log('Final expanded courses:', expandedCourses)
+
     const handleCourseClick = (clickInfo: EventClickArg) => {
         const selectedCourse = enrolledCourses.find(
             (course) => course._id === clickInfo.event.id
@@ -78,8 +121,11 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
     }
 
     const handleUserEventClick = (clickInfo: EventClickArg) => {
+        const eventId = clickInfo.event.extendedProps._id || 'N/A'
+
+        // Find the selected user event based on _id
         const selectedUserEvent = userEvents.find(
-            (userEvent) => userEvent._id === clickInfo.event.id
+            (userEvent) => userEvent._id === eventId
         )
 
         if (selectedUserEvent) {
@@ -109,11 +155,10 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
                     Create New Event
                 </button>
                 {isUserEventModalOpen && (
-                    <UserEventModal
+                    <CreateUserEventModal
                         userId={userId}
                         isOpen={isUserEventModalOpen}
                         onClose={() => setIsUserEventModalOpen(false)}
-                        userEvents={userEvents}
                         setUserEvents={setUserEvents}
                     />
                 )}
@@ -126,7 +171,7 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
                     <FullCalendar
                         plugins={[dayGridPlugin]}
                         initialView={viewMode}
-                        events={[...enrolledCourses, ...userEvents]}
+                        events={[...expandedCourses, ...userEvents]}
                         eventClick={eventClickDispatcher}
                         ref={calendarRef}
                         headerToolbar={{
@@ -167,7 +212,7 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
                         <>
                             <div className='backdrop'></div>
                             {/* Replace with your actual UserEventModal component */}
-                            <UserEventModal
+                            <EditUserEventModal
                                 event={selectedUserEvent}
                                 userId={userId}
                                 isOpen={isUserEventModalOpen}

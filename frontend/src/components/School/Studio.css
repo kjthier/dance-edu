@@ -31,4 +31,34 @@
     z-index: 1; /* to place it behind the modal */
 }
 
+.heading-with-search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    color: var(--primary-text-color);
+}
+
+.search-input {
+    width: 370px;
+    height: 30px;
+    border-radius: 6px;
+    border: 0.7px solid var(--tertiary-text-color);
+    padding: 0px 10px;
+    font-size: 13px;
+    color: var(--primary-text-color);
+    background-color: var(--primary-background-color);
+    margin-right: 20px;
+}
+
 /* background: linear-gradient(270deg,rgba(23,25,39,.9) 0,rgba(23,25,39,.72) 48.96%,rgba(23,25,39,.54)); */

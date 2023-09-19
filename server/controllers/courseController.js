@@ -83,6 +83,16 @@ export const updateToUnenrolled = async (req, res) => {
     }
 }
 
+// delete all courses
+export const deleteAllCourses = async (req, res) => {
+    try {
+        await Course.deleteMany({})
+        res.status(200).json({ message: 'All courses have been deleted.' })
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
 
 
 
