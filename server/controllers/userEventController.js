@@ -1,4 +1,4 @@
-import userEvent from '../models/course.js'
+import userEvent from '../models/userEvent.js'
 
 export const getAllUserEvents = async (req, res) => {
     try {
@@ -42,5 +42,14 @@ export const updateUserEvent = async (req, res) => {
         res.status(200).json(updatedUserEvent)
     } catch (error) {
         res.status(400).json({ message: error.message })
+    }
+}
+
+export const deleteAllUserEvents = async (req, res) => {
+    try {
+        await userEvent.deleteMany({})
+        res.status(200).json({ message: 'All user events have been deleted.' })
+    } catch (error) {
+        res.status(500).json({ message: error.message })
     }
 }

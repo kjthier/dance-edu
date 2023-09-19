@@ -58,7 +58,7 @@ const EventUnenrollModal: React.FC<EventUnenrollModalProps> = ({
             }
         }
     }
-    
+
     // destructure event to use its properties in the return
     const { extendedProps, title } = event
 

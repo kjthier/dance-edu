@@ -11,6 +11,7 @@ interface UserEventModalProps {
     userId: string
     isOpen: boolean
     onClose: () => void
+    event?: IUserEvent
     userEvents: IUserEvent[]
     setUserEvents: React.Dispatch<React.SetStateAction<IUserEvent[]>>
 }
@@ -24,7 +25,7 @@ const UserEventModal: React.FC<UserEventModalProps> = ({
 }) => {
     const [formData, setFormData] = useState({
         title: '',
-        start: new Date().toISOString().split('T')[0], // Initialize with today's date
+        start: new Date().toISOString().split('T')[0],
         allDay: false,
         url: '',
         description: '',
@@ -44,10 +45,10 @@ const UserEventModal: React.FC<UserEventModalProps> = ({
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault() // Prevent default form submission
+        e.preventDefault()
 
         const newEvent: IUserEvent = {
-            userId: userId,
+            userId,
             title: formData.title,
             start: new Date(formData.start),
             allDay: formData.allDay,
@@ -68,27 +69,33 @@ const UserEventModal: React.FC<UserEventModalProps> = ({
         onClose()
     }
 
-    // Sent POST req to server to add a new user event
     const addUserEvent = async (newEvent: IUserEvent) => {
-        const response = await fetch(
-            `https://dance-edu.onrender.com/userEvents`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newEvent),
+        let response
+
+        try {
+            response = await fetch(
+                `https://dance-edu.onrender.com/userEvents`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newEvent),
+                }
+            )
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok')
             }
-        )
 
-        const savedEvent: IUserEvent = await response.json()
+            const savedEvent: IUserEvent = await response.json()
+            const updatedUserEvents = [...userEvents, savedEvent]
 
-        // Add to local state to show on calendar
-        setUserEvents([...userEvents, savedEvent])
-
-        console.log('New saved event:', savedEvent);
-console.log('Updated User Events:', [...userEvents, savedEvent]);
-
+            setUserEvents(updatedUserEvents)
+            console.log('Updated user events: ', updatedUserEvents) // Log to debug
+        } catch (error) {
+            console.error('Error:', error)
+        }
     }
 
     return isOpen ? (
@@ -180,9 +187,7 @@ console.log('Updated User Events:', [...userEvents, savedEvent]);
                         </label>
                     ))}
 
-                    <button onClick={handleSubmit} type='submit'>
-                        Save
-                    </button>
+                    <button type='submit'>Save</button>
                     <button onClick={onClose}>Close</button>
                 </form>
             </div>

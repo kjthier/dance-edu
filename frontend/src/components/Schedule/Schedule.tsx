@@ -26,6 +26,8 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
     const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
     const [isUserEventModalOpen, setIsUserEventModalOpen] = useState(false)
     const [userEvents, setUserEvents] = useState<IUserEvent[]>([])
+    const [selectedUserEvent, setSelectedUserEvent] =
+        useState<IUserEvent | null>(null)
 
     // This hook allows parent component (StudentHome.tsx) to interact with the FullCalendar API by using the ref passed here
     useImperativeHandle(ref, () => ({
@@ -65,7 +67,6 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
             id: course._id,
         }))
 
-    // When course is clicked, open unenroll modal
     const handleCourseClick = (clickInfo: EventClickArg) => {
         const selectedCourse = enrolledCourses.find(
             (course) => course._id === clickInfo.event.id
@@ -73,6 +74,26 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
         if (selectedCourse) {
             setSelectedCourse(selectedCourse)
             setIsModalOpen(true)
+        }
+    }
+
+    const handleUserEventClick = (clickInfo: EventClickArg) => {
+        const selectedUserEvent = userEvents.find(
+            (userEvent) => userEvent._id === clickInfo.event.id
+        )
+
+        if (selectedUserEvent) {
+            setSelectedUserEvent(selectedUserEvent)
+            setIsUserEventModalOpen(true)
+        }
+    }
+
+    const eventClickDispatcher = (clickInfo: EventClickArg) => {
+        const eventType = clickInfo.event.extendedProps.eventType
+        if (eventType === 'custom') {
+            handleUserEventClick(clickInfo)
+        } else {
+            handleCourseClick(clickInfo)
         }
     }
 
@@ -106,7 +127,7 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
                         plugins={[dayGridPlugin]}
                         initialView={viewMode}
                         events={[...enrolledCourses, ...userEvents]}
-                        eventClick={handleCourseClick}
+                        eventClick={eventClickDispatcher}
                         ref={calendarRef}
                         headerToolbar={{
                             left: 'prev,next',
@@ -131,17 +152,29 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
                             setViewMode(args.view.type)
                         }}
                     />
-                    {selectedCourse && (
+                    {selectedCourse && isModalOpen && (
                         <>
-                            {isModalOpen && <div className='backdrop'></div>}
-                            {selectedCourse && (
-                                <EventUnenrollModal
-                                    isOpen={isModalOpen}
-                                    event={selectedCourse}
-                                    onClose={handleCloseModal}
-                                    setCourses={setCourses}
-                                />
-                            )}
+                            <div className='backdrop'></div>
+                            <EventUnenrollModal
+                                isOpen={isModalOpen}
+                                event={selectedCourse}
+                                onClose={handleCloseModal}
+                                setCourses={setCourses}
+                            />
+                        </>
+                    )}
+                    {selectedUserEvent && isUserEventModalOpen && (
+                        <>
+                            <div className='backdrop'></div>
+                            {/* Replace with your actual UserEventModal component */}
+                            <UserEventModal
+                                event={selectedUserEvent}
+                                userId={userId}
+                                isOpen={isUserEventModalOpen}
+                                onClose={() => setIsUserEventModalOpen(false)}
+                                userEvents={userEvents}
+                                setUserEvents={setUserEvents}
+                            />
                         </>
                     )}
                 </div>
