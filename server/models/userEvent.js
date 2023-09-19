@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { SessionSchema } from '../models/session.js'
 
 const userEventSchema = new mongoose.Schema({
     userId: String,
