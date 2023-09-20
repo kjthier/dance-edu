@@ -10,7 +10,6 @@ type SidebarProps = {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ userId, isOpen, toggleSidebar }) => {
-    
     return (
         <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
             <button onClick={toggleSidebar} className='burger-icon'>
@@ -49,12 +48,11 @@ const Sidebar: React.FC<SidebarProps> = ({ userId, isOpen, toggleSidebar }) => {
                             </Link>
                         </li>
                         <li>
-                            <Link to={`/student/forum`}>Forum</Link>
-                        </li>{' '}
+                            <Link to={`/student/${userId}/forum`}>Forum</Link>
+                        </li>
                     </ul>
                 </nav>
             )}
-
         </div>
     )
 }

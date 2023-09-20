@@ -20,6 +20,10 @@ const Goals: React.FC = () => {
         localStorage.setItem('weeklyGoal', weeklyGoal)
         localStorage.setItem('monthlyGoal', monthlyGoal)
         localStorage.setItem('actions', actions)
+        console.log('About to dispatch componentReady.');
+
+        document.dispatchEvent(new CustomEvent('componentReady'));
+
     }, [weeklyGoal, monthlyGoal, actions])
 
     return (

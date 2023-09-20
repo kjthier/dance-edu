@@ -40,6 +40,9 @@ const TodaySchedule: React.FC = () => {
         }
 
         fetchData()
+        console.log('About to dispatch componentReady.');
+
+        document.dispatchEvent(new CustomEvent('componentReady'))
     }, [])
 
     const todayStart = new Date()

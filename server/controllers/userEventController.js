@@ -31,11 +31,9 @@ export const getUserEvent = async (req, res) => {
 export const updateUserEvent = async (req, res) => {
     try {
         const foundUserEvent = await UserEvent.findById(req.params.id)
-
         if (!foundUserEvent) {
             return res.status(404).json({ message: 'UserEvent not found' })
         }
-
         Object.assign(foundUserEvent, req.body)
         const updatedUserEvent = await foundUserEvent.save()
         res.status(200).json(updatedUserEvent)
@@ -59,7 +57,7 @@ export const deleteUserEvent = async (req, res) => {
         if (!foundUserEvent) {
             return res.status(404).json({ message: 'UserEvent not found' })
         }
-        await foundUserEvent.remove()
+        await UserEvent.deleteOne({ _id: req.params.id })
         res.status(200).json({ message: 'UserEvent has been deleted' })
     } catch (error) {
         res.status(500).json({ message: error.message })
