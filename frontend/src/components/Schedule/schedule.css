@@ -56,6 +56,7 @@
     margin: 0px 4px !important;
     padding: 4px 0px !important;
 }
+
 .fc-daygrid-event-dot {
     display: none !important;
 }
@@ -65,4 +66,25 @@
     font-size: 12px !important;
     font-weight: normal !important;
     color: var(--primary-text-color) !important;
+}
+
+.add-event-section {
+    margin-bottom: 15px;
+}
+
+.new-event-btn {
+    width: 110px;
+    height: 40px;
+    margin-left: 0px;
+}
+
+.create_user-dialog-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.5); /* Add this */
+
 }

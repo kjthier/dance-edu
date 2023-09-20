@@ -181,12 +181,12 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
 
     return (
         <>
-            <div>
+            <div className='add-event-section'>
                 <button
-                    className='primary-btn'
+                    className='primary-btn new-event-btn'
                     onClick={() => setIsCreateUserEventModalOpen(true)}
                 >
-                    Create New Event
+                    Add Event
                 </button>
                 {isCreateUserEventModalOpen && (
                     <CreateUserEventModal

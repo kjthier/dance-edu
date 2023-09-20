@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {
-    IUserEvent, ISession,
+    IUserEvent,
+    ISession,
     Location,
     StudioType,
     ProgramType,
@@ -26,7 +27,6 @@ const CreateUserEventModal: React.FC<CreateUserEventModalProps> = ({
         startTime: '',
         endTime: '',
         allDay: false,
-        description: '',
         longDescription: '',
         location: Location.ONLINE,
         studioType: StudioType.LIVE,
@@ -68,13 +68,15 @@ const CreateUserEventModal: React.FC<CreateUserEventModalProps> = ({
     }
 
     const createEvent = async () => {
-        const combinedDateTime = new Date(`${formData.start}T${formData.startTime}:00`);
+        const combinedDateTime = new Date(
+            `${formData.start}T${formData.startTime}:00`
+        )
         const session: ISession = {
             date: formData.start,
             startTime: formData.startTime,
             endTime: formData.endTime,
-        };
-        
+        }
+
         const newEvent: IUserEvent = {
             userId,
             title: formData.title,
@@ -83,23 +85,22 @@ const CreateUserEventModal: React.FC<CreateUserEventModalProps> = ({
             overlap: true,
             editable: true,
             extendedProps: {
-                description: formData.description,
                 longDescription: formData.longDescription,
-                schedule: [session],  // adding the session here
+                schedule: [session], // adding the session here
                 location: formData.location,
                 studioType: formData.studioType,
                 programType: formData.programType,
                 isEnrolled: true,
                 eventType: 'custom',
             },
-        };
+        }
         await addUserEvent(newEvent)
         onClose()
     }
 
     return isOpen ? (
-        <div className='dialog-overlay'>
-            <div className='event-modal'>
+        <div onClick={onClose} className='dialog-overlay'>
+            <div className='event-modal' onClick={(e) => e.stopPropagation()}>
                 <form
                     onSubmit={(e) => {
                         e.preventDefault()
@@ -107,101 +108,109 @@ const CreateUserEventModal: React.FC<CreateUserEventModalProps> = ({
                     }}
                     className='event-modal-content'
                 >
-                    <div className='event-modal-title'>Add User Event</div>
                     <input
-                        className='event-modal-description'
+                        className='edit_event-inputs'
                         name='title'
                         value={formData.title}
                         onChange={handleChange}
                         placeholder='Event Title'
                     />
-                    <input
-                        className='event-modal-description'
-                        name='start'
-                        value={formData.start}
-                        onChange={handleChange}
-                        placeholder='Start Date'
-                        type='date'
-                    />
-                    <input
-                        className='event-modal-description'
-                        name='startTime'
-                        value={formData.startTime}
-                        onChange={handleChange}
-                        placeholder='Start Time'
-                        type='time'
-                    />
-                    <input
-                        className='event-modal-description'
-                        name='endTime'
-                        value={formData.endTime}
-                        onChange={handleChange}
-                        placeholder='End Time'
-                        type='time'
-                    />
-                    <div className='event-modal-subheading'>
-                        <input
-                            type='checkbox'
-                            name='allDay'
-                            checked={formData.allDay}
-                            onChange={handleChange}
-                        />
-                        All Day
+                    <div className='datetime-container'>
+                        <div className='datetime-left'>
+                            <input
+                                className='edit_event-inputs'
+                                name='start'
+                                value={formData.start}
+                                onChange={handleChange}
+                                placeholder='Start Date'
+                                type='date'
+                            />
+                            <div className='allday'>
+                                <input
+                                    type='checkbox'
+                                    name='allDay'
+                                    checked={formData.allDay}
+                                    onChange={handleChange}
+                                />
+                                <span>all-day</span>
+                            </div>
+                        </div>
+                        <div className='datetime-right'>
+                            <input
+                                className='edit_event-inputs'
+                                name='startTime'
+                                value={formData.startTime}
+                                onChange={handleChange}
+                                placeholder='Start Time'
+                                type='time'
+                            />
+                            <input
+                                className='edit_event-inputs'
+                                name='endTime'
+                                value={formData.endTime}
+                                onChange={handleChange}
+                                placeholder='End Time'
+                                type='time'
+                            />
+                        </div>
                     </div>
                     <textarea
-                        className='event-modal-description'
-                        name='description'
-                        value={formData.description}
-                        onChange={handleChange}
-                        placeholder='Description'
-                    />
-                    <textarea
-                        className='event-modal-description'
+                        className='edit_event-inputs edit_event-description'
                         name='longDescription'
                         value={formData.longDescription}
                         onChange={handleChange}
-                        placeholder='Long Description'
+                        placeholder='Description'
                     />
-                    {Object.values(Location).map((loc) => (
-                        <label key={loc}>
-                            <input
-                                type='radio'
-                                name='location'
-                                value={loc}
-                                checked={formData.location === loc}
-                                onChange={handleChange}
-                            />
-                            {loc}
-                        </label>
-                    ))}
-                    {Object.values(StudioType).map((type) => (
-                        <label key={type}>
-                            <input
-                                type='radio'
-                                name='studioType'
-                                value={type}
-                                checked={formData.studioType === type}
-                                onChange={handleChange}
-                            />
-                            {type}
-                        </label>
-                    ))}
-                    {Object.values(ProgramType).map((type) => (
-                        <label key={type}>
-                            <input
-                                type='radio'
-                                name='programType'
-                                value={type}
-                                checked={formData.programType === type}
-                                onChange={handleChange}
-                            />
-                            {type}
-                        </label>
-                    ))}{' '}
-                    <button type='submit'>Save</button>
-                    <button type='button' onClick={onClose}>
-                        Close
-                    </button>
+                    <div className='radio-container'>
+                        <div className='radio-column'>
+                            <h4>Location</h4>
+                            {Object.values(Location).map((loc) => (
+                                <label key={loc} className='label-radio'>
+                                    <input
+                                        type='radio'
+                                        name='location'
+                                        value={loc}
+                                        checked={formData.location === loc}
+                                        onChange={handleChange}
+                                    />
+                                    {loc}
+                                </label>
+                            ))}
+                            <h4>Studio Type</h4>
+                            {Object.values(StudioType).map((type) => (
+                                <label key={type} className='label-radio'>
+                                    <input
+                                        type='radio'
+                                        name='studioType'
+                                        value={type}
+                                        checked={formData.studioType === type}
+                                        onChange={handleChange}
+                                    />
+                                    {type}
+                                </label>
+                            ))}
+                        </div>
+                        <div className='radio-column'>
+                            <h4>Program Type</h4>
+                            {Object.values(ProgramType).map((type) => (
+                                <label key={type} className='label-radio'>
+                                    <input
+                                        type='radio'
+                                        name='programType'
+                                        value={type}
+                                        checked={formData.programType === type}
+                                        onChange={handleChange}
+                                    />
+                                    {type}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+                    <div className='button-row'>
+                        <button className='primary-btn' type='submit'>
+                            Save
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
