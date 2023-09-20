@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {
-    IUserEvent,
+    IUserEvent, ISession,
     Location,
     StudioType,
     ProgramType,
@@ -23,8 +23,9 @@ const CreateUserEventModal: React.FC<CreateUserEventModalProps> = ({
     const [formData, setFormData] = useState({
         title: '',
         start: new Date().toISOString().split('T')[0],
+        startTime: '',
+        endTime: '',
         allDay: false,
-        url: '',
         description: '',
         longDescription: '',
         location: Location.ONLINE,
@@ -67,24 +68,31 @@ const CreateUserEventModal: React.FC<CreateUserEventModalProps> = ({
     }
 
     const createEvent = async () => {
+        const combinedDateTime = new Date(`${formData.start}T${formData.startTime}:00`);
+        const session: ISession = {
+            date: formData.start,
+            startTime: formData.startTime,
+            endTime: formData.endTime,
+        };
+        
         const newEvent: IUserEvent = {
             userId,
             title: formData.title,
-            start: new Date(formData.start),
+            start: combinedDateTime,
             allDay: formData.allDay,
-            url: formData.url,
             overlap: true,
             editable: true,
             extendedProps: {
                 description: formData.description,
                 longDescription: formData.longDescription,
+                schedule: [session],  // adding the session here
                 location: formData.location,
                 studioType: formData.studioType,
                 programType: formData.programType,
                 isEnrolled: true,
                 eventType: 'custom',
             },
-        }
+        };
         await addUserEvent(newEvent)
         onClose()
     }
@@ -115,6 +123,22 @@ const CreateUserEventModal: React.FC<CreateUserEventModalProps> = ({
                         placeholder='Start Date'
                         type='date'
                     />
+                    <input
+                        className='event-modal-description'
+                        name='startTime'
+                        value={formData.startTime}
+                        onChange={handleChange}
+                        placeholder='Start Time'
+                        type='time'
+                    />
+                    <input
+                        className='event-modal-description'
+                        name='endTime'
+                        value={formData.endTime}
+                        onChange={handleChange}
+                        placeholder='End Time'
+                        type='time'
+                    />
                     <div className='event-modal-subheading'>
                         <input
                             type='checkbox'
@@ -124,13 +148,6 @@ const CreateUserEventModal: React.FC<CreateUserEventModalProps> = ({
                         />
                         All Day
                     </div>
-                    <input
-                        className='event-modal-description'
-                        name='url'
-                        value={formData.url}
-                        onChange={handleChange}
-                        placeholder='URL'
-                    />
                     <textarea
                         className='event-modal-description'
                         name='description'
@@ -182,7 +199,9 @@ const CreateUserEventModal: React.FC<CreateUserEventModalProps> = ({
                         </label>
                     ))}{' '}
                     <button type='submit'>Save</button>
-                    <button onClick={onClose}>Close</button>
+                    <button type='button' onClick={onClose}>
+                        Close
+                    </button>
                 </form>
             </div>
         </div>

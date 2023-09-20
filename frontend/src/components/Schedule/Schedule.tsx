@@ -44,18 +44,46 @@ const expandCoursesToEvents = (courses: ICourse[]): any[] => {
 
             const eventStartDate = new Date(`${session.date}T${startTime24hr}`)
             const eventEndDate = new Date(`${session.date}T${endTime24hr}`)
-
-            console.log('Converted startTime:', startTime24hr)
-            console.log('Converted endTime:', endTime24hr)
-            console.log('eventStartDate:', eventStartDate)
-            console.log('eventEndDate:', eventEndDate)
-
             return {
                 ...course,
+                originalId: course._id, // Store original _id
+                id: course._id + '-' + session.date + '-' + startTime24hr, // Generates a unique id for each session
                 start: eventStartDate,
                 end: eventEndDate,
             }
         })
+    })
+}
+
+const expandUserEventsToEvents = (userEvents: IUserEvent[]): any[] => {
+    return userEvents.flatMap((userEvent) => {
+        // Check if schedule exists in extendedProps
+        if (userEvent.extendedProps.schedule) {
+            return userEvent.extendedProps.schedule.map((session) => {
+                const startTime24hr = convertTo24Hour(session.startTime)
+                const endTime24hr = convertTo24Hour(session.endTime)
+
+                const eventStartDate = new Date(
+                    `${session.date}T${startTime24hr}`
+                )
+                const eventEndDate = new Date(`${session.date}T${endTime24hr}`)
+
+                return {
+                    ...userEvent,
+                    id:
+                        userEvent._id +
+                        '-' +
+                        session.date +
+                        '-' +
+                        startTime24hr,
+                    start: eventStartDate,
+                    end: eventEndDate,
+                }
+            })
+        } else {
+            // If no schedule, just return the original userEvent (or any other fallback logic you want)
+            return [userEvent]
+        }
     })
 }
 
@@ -69,6 +97,8 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
     const [userEvents, setUserEvents] = useState<IUserEvent[]>([])
     const [selectedUserEvent, setSelectedUserEvent] =
         useState<IUserEvent | null>(null)
+    const [isCreateUserEventModalOpen, setIsCreateUserEventModalOpen] =
+        useState(false)
 
     // This hook allows parent component (StudentHome.tsx) to interact with the FullCalendar API by using the ref passed here
     useImperativeHandle(ref, () => ({
@@ -100,7 +130,7 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
     // Filter courses where isEnrolled is true
     const enrolledCourses = courses
         .filter((course) => course.extendedProps.isEnrolled)
-        // Add an id property to each FullCalendar course object that matches the course id in db
+        // Adds an id property to each FullCalendar course object that matches the course id in db
         .map((course) => ({
             ...course,
             id: course._id,
@@ -108,11 +138,12 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
 
     // Expand courses into multiple events based on their sessions
     const expandedCourses = expandCoursesToEvents(enrolledCourses)
-    console.log('Final expanded courses:', expandedCourses)
+    const expandedUserEvents = expandUserEventsToEvents(userEvents)
 
     const handleCourseClick = (clickInfo: EventClickArg) => {
+        const originalId = clickInfo.event.extendedProps.originalId // Use the stored originalId because all sessions have been expanded and have their own ids
         const selectedCourse = enrolledCourses.find(
-            (course) => course._id === clickInfo.event.id
+            (course) => course._id === originalId
         )
         if (selectedCourse) {
             setSelectedCourse(selectedCourse)
@@ -151,14 +182,17 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
     return (
         <>
             <div>
-                <button className='primary-btn' onClick={() => setIsUserEventModalOpen(true)}>
+                <button
+                    className='primary-btn'
+                    onClick={() => setIsCreateUserEventModalOpen(true)}
+                >
                     Create New Event
                 </button>
-                {isUserEventModalOpen && (
+                {isCreateUserEventModalOpen && (
                     <CreateUserEventModal
                         userId={userId}
-                        isOpen={isUserEventModalOpen}
-                        onClose={() => setIsUserEventModalOpen(false)}
+                        isOpen={isCreateUserEventModalOpen}
+                        onClose={() => setIsCreateUserEventModalOpen(false)}
                         setUserEvents={setUserEvents}
                     />
                 )}
@@ -171,7 +205,7 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
                     <FullCalendar
                         plugins={[dayGridPlugin]}
                         initialView={viewMode}
-                        events={[...expandedCourses, ...userEvents]}
+                        events={[...expandedCourses, ...expandedUserEvents]}
                         eventClick={eventClickDispatcher}
                         ref={calendarRef}
                         headerToolbar={{

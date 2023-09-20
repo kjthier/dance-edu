@@ -4,7 +4,7 @@ import './Footer.css'
 
 const Footer: React.FC = () => {
     return (
-      <body>
+      <div>
         <section>
           <footer className='top'>
             <img src={logo} alt='DANCE-EDU logo' />
@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
             </div>
           </footer>
         </section>
-      </body>
+      </div>
     );
   };
   
