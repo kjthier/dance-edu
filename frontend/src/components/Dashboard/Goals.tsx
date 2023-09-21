@@ -20,19 +20,14 @@ const Goals: React.FC = () => {
         localStorage.setItem('weeklyGoal', weeklyGoal)
         localStorage.setItem('monthlyGoal', monthlyGoal)
         localStorage.setItem('actions', actions)
-        console.log('About to dispatch componentReady.');
-
-        document.dispatchEvent(new CustomEvent('componentReady'));
-
     }, [weeklyGoal, monthlyGoal, actions])
 
     return (
         <div>
-            <h2 className='dash-component-title'>Your Goals</h2>
+            <h3 className='dash-component-title'>Your Goals</h3>
             <div>
-                <h3 className='dash-component-subheading'>This Week's Goal</h3>
-                <TextArea
-                    className='textarea'
+                <h4 className='dash-component-subheading'>Goal this week:</h4>
+                <textarea
                     value={weeklyGoal}
                     onChange={(e) => setWeeklyGoal(e.target.value)}
                     placeholder="What's your goal for this week?"
@@ -40,9 +35,10 @@ const Goals: React.FC = () => {
             </div>
 
             <div>
-                <h3 className='dash-component-subheading'>This Month's Goal</h3>
-                <TextArea
-                    className='textarea'
+                <h4 className='dash-component-subheading'>
+                    Goal this month:
+                </h4>
+                <textarea
                     value={monthlyGoal}
                     onChange={(e) => setMonthlyGoal(e.target.value)}
                     placeholder="What's your goal for this month?"
@@ -50,11 +46,11 @@ const Goals: React.FC = () => {
             </div>
 
             <div>
-                <h3 className='dash-component-subheading'>
-                    Actions Towards Goals
-                </h3>
-                <TextArea
-                    className='textarea'
+                <h4 className='dash-component-subheading'>
+                    Actions:
+                </h4>
+                <textarea
+                className='actions-textarea'
                     value={actions}
                     onChange={(e) => setActions(e.target.value)}
                     placeholder='Write 1-3 actions towards achieving your goals.'

@@ -89,7 +89,7 @@ const CoursesDisplayed: React.FC = () => {
     ) => (
         <Box className='available-courses'>
             <h3 className='course-section'>
-                {title} <CaretRightIcon />
+                <span>{title}</span><CaretRightIcon className='caret-icon-courses' />
             </h3>
             <Box className='course-grid'>
                 {renderFilteredCourses(filterFunc)}

@@ -3,6 +3,8 @@
     gap: 0px;
     padding: 0 20px;
     background-color: var(--primary-bg-color);
+    border-radius: 2px;
+
 }
 
 .logo {
@@ -26,8 +28,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    /* font-weight: 600; */
-    font-size: 17px;
+    font-weight: 600;
+    font-size: 18px;
     
 }
 

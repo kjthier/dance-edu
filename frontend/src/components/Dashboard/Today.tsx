@@ -40,9 +40,6 @@ const TodaySchedule: React.FC = () => {
         }
 
         fetchData()
-        console.log('About to dispatch componentReady.');
-
-        document.dispatchEvent(new CustomEvent('componentReady'))
     }, [])
 
     const todayStart = new Date()
@@ -64,7 +61,7 @@ const TodaySchedule: React.FC = () => {
 
     return (
         <div>
-            <h2 className='dash-component-title'>Today's Schedule</h2>
+            <h3 className='dash-component-title'>Today's Schedule</h3>
             <ul className='todays-schedule-list'>
                 {sortedArray.map((item, index) => (
                     <li className='todays-schedule-item' key={index}>

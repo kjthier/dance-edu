@@ -1,67 +1,71 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Packery from 'packery'
 import Draggabilly from 'draggabilly'
 import Today from './Today'
 import Goals from './Goals'
 import CompletedCourses from './CompletedCourses'
 import Notes from './Notes'
-import UpcomingPerformances from './UpcomingPerformances'
+import Achievements from './Achievements'
 import './Dashboard.css'
 
 const Dashboard: React.FC = () => {
     const dashboardRef = useRef(null)
-    const [componentsReady, setComponentsReady] = useState(0)
 
     useEffect(() => {
-        const handleComponentReady = () => {
-            console.log('Received componentReady event.');
-            setComponentsReady(prev => prev + 1)
-        }
+        if (dashboardRef.current) {
+            const packery = new Packery(dashboardRef.current, {
+                itemSelector: '.dashboard-item',
+                gutter: 10,
+            })
 
-        const initializePackeryAndDraggabilly = () => {
-            if (dashboardRef.current) {
-                const packery = new Packery(dashboardRef.current, {
-                    itemSelector: '.dashboard-item',
-                    gutter: 10,
+            // Load layout from localStorage
+            const savedLayout = localStorage.getItem('dashboardLayout')
+            if (savedLayout) {
+                const layout = JSON.parse(savedLayout)
+                layout.forEach((id) => {
+                    const item = document.querySelector(`[data-id="${id}"]`)
+                    if (item) {
+                        dashboardRef.current.appendChild(item)
+                    }
                 })
-
-                const itemElems = packery.getItemElements()
-
-                itemElems.forEach((itemElem: HTMLElement) => {
-                    const draggie = new Draggabilly(itemElem)
-                    packery.bindDraggabillyEvents(draggie)
-                })
+                packery.layout()
             }
-        }
 
-        if (componentsReady === 5) { 
-            initializePackeryAndDraggabilly()
-        }
+            // Make draggable
+            const draggies = []
+            const items = packery.getItemElements()
+            items.forEach((item) => {
+                const draggie = new Draggabilly(item)
+                draggies.push(draggie)
+                packery.bindDraggabillyEvents(draggie)
+            })
 
-        document.addEventListener('componentReady', handleComponentReady)
-
-        return () => {
-            document.removeEventListener('componentReady', handleComponentReady)
+            // Save layout to localStorage
+            packery.on('dragItemPositioned', () => {
+                const layout = packery
+                    .getItemElements()
+                    .map((item) => item.getAttribute('data-id'))
+                localStorage.setItem('dashboardLayout', JSON.stringify(layout))
+            })
         }
-    }, [componentsReady])
-    
+    }, [])
 
     return (
         <div ref={dashboardRef} className='dashboard'>
-            <div className='dashboard-item'>
+            <div className='dashboard-item' data-id='today'>
                 <Today />
             </div>
-            <div className='dashboard-item'>
+            <div className='dashboard-item' data-id='goals'>
                 <Goals />
             </div>
-            <div className='dashboard-item'>
+            <div className='dashboard-item' data-id='completedCourses'>
                 <CompletedCourses />
             </div>
-            <div className='dashboard-item'>
+            <div className='dashboard-item' data-id='notes'>
                 <Notes />
             </div>
-            <div className='dashboard-item'>
-                <UpcomingPerformances />
+            <div className='dashboard-item' data-id='achievements'>
+                <Achievements />
             </div>
         </div>
     )

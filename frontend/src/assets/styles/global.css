@@ -6,15 +6,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
 
 :root {
-    --primary-bg-color: #ecf0f1;
-    --secondary-bg-color: #f6fafb;
+    --primary-bg-color: #ecf0f1; /* grey */
+    --secondary-bg-color: #f6fafb; /* lt grey bluish */
+    --main-bg-color: #fdfeff; /* white */
+
     --primary-text-color: #333;
     --secondary-text-color: #666;
     --tertiary-text-color: #999;
     --quaternary-text-color: #0169aa;
     --fifth-text-color: #47869e;
     --border-color: #ccc;
-    --main-bg-color: #fdfeff;
     --main-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     --border-radius: 28px;
 }
@@ -36,7 +37,7 @@ h3 {
 }
 
 h4 {
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .main-container {
@@ -44,22 +45,23 @@ h4 {
     padding: 20px 20px 20px 20px;
     background-color: var(--primary-bg-color);
     min-height: 100vh; /* Takes at least full viewport height */
-
 }
 
 .content-wrapper {
     display: flex;
     padding: 20px;
     background-color: var(--secondary-bg-color);
+    /* box-shadow: var(--main-shadow); */
+    border-radius: 2px;
+
 }
 
 .main-content {
     flex: 1;
 }
 
-.main-content.open {
+/* .main-content.open {
     margin-left: 150px; /* expanded sidebar width */
-}
 
 .main-content.closed {
     margin-left: 20px; /* collapsed sidebar width */
@@ -85,8 +87,8 @@ h4 {
     position: relative;
     overflow: hidden;
     z-index: 1;
-    width: 90px;  /* Fixed width */
-    height: 35px;  /* Fixed height */
+    width: 90px; /* Fixed width */
+    height: 35px; /* Fixed height */
 }
 
 .primary-btn:hover {
@@ -174,8 +176,8 @@ h4 {
     position: relative;
     overflow: hidden;
     z-index: 1;
-    width: 90px;  /* Fixed width */
-    height: 35px;  /* Fixed height */
+    width: 90px; /* Fixed width */
+    height: 35px; /* Fixed height */
 }
 
 .secondary-btn::before {

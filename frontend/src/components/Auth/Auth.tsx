@@ -32,7 +32,7 @@ const Auth: React.FC = () => {
                     if (response.data.token) {
                         localStorage.setItem('authToken', response.data.token)
                         localStorage.setItem('userId', response.data.userId)
-                        navigate(`/student/${response.data.userId}/schedule`)
+                        navigate(`/student/${response.data.userId}/dashboard`)
                     }
                 } catch (error) {
                     console.log('Auto-login failed:', error)
@@ -70,10 +70,10 @@ const Auth: React.FC = () => {
                     setShowPopup(true)
                     setTimeout(() => {
                         setShowPopup(false)
-                        navigate(`/student/${response.data.userId}/schedule`)
+                        navigate(`/student/${response.data.userId}/dashboard`)
                     }, 2500)
                 } else {
-                    navigate(`/student/${response.data.userId}/schedule`)
+                    navigate(`/student/${response.data.userId}/dashboard`)
                 }
             }
         } catch (error: unknown) {

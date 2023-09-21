@@ -51,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ userId, isOpen, toggleSidebar }) => {
                             <Link to={`/student/${userId}/forum`}>Forum</Link>
                         </li>
                         <li>
-                            <Link to={`/student/${userId}/settings`}><GearIcon /></Link>
+                            <Link to={`/student/${userId}/settings`}><GearIcon className='gear-icon'/></Link>
                         </li>
                     </ul>
                 </nav>
