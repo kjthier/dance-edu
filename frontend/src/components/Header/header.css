@@ -26,8 +26,9 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-weight: 600;
+    /* font-weight: 600; */
     font-size: 17px;
+    
 }
 
 .welcome-text {
@@ -35,7 +36,7 @@
     /* border-right: .15em solid white; */
     white-space: nowrap;
     margin: 0 auto;
-    letter-spacing: .05em;
+    letter-spacing: .04em;
     animation: typing 2s steps(100, end), blink-caret 1s step-end infinite;
 }
 
@@ -51,8 +52,10 @@
 
 .quote {
     font-family: 'Caveat', cursive;
-    font-size: 22px !important;
-    color: var(--primary-text-color) !important;
+    font-size: 24px !important;
+    /* font-style: italic; */
+    margin-right: 10px;
+    /* color: var(--primary-text-color) !important; */
 }
 
 /* -------------AVATAR------------- */
@@ -70,6 +73,7 @@ a {
     animation-duration: 400ms;
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform, opacity;
+    z-index: 2000;
 }
 .HoverCardContent[data-side='top'] {
     animation-name: slideDownAndFade;

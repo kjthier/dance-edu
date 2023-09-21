@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ userId }) => {
                     </Box>
                 </Flex>
                 <Box>
-                    <Text size='5' color='gray' className='quote'>
+                    <Text className='quote'>
                         “Dancers are made, not born.” - Mikhail Baryshnikov
                     </Text>
                 </Box>
