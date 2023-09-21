@@ -45,7 +45,7 @@
 .fc-event-title-container {
     font-size: 12px !important;
     font-weight: 400 !important;
-    background-color: var(--fifth-text-color) !important;
+    /* background-color: red !important; */
 }
 
 .fc-day-today {
@@ -63,7 +63,7 @@
 
 .fc-event-title,
 .fc-event-time {
-    font-size: 12px !important;
+    font-size: 13px !important;
     font-weight: normal !important;
     color: var(--primary-text-color) !important;
 }
@@ -86,5 +86,44 @@
     left: 0;
     z-index: 1000;
     background-color: rgba(0, 0, 0, 0.5); /* Add this */
-
 }
+
+.fc-timegrid-slot-label-cushion {
+    padding-top: 5px !important;
+}
+
+/* .fc-timegrid-axis-frame, */
+.fc-timegrid-slot-label,
+.fc-timegrid span {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 15px !important;
+    color: var(--mauve-11) !important;
+    font-weight: 450 !important;
+}
+
+.fc-timegrid-axis-cushion {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 30px !important;
+}
+
+.fc-v-event {
+    background: linear-gradient(
+        0deg,
+        #37687b,
+        rgba(55, 104, 123, 0.7),
+        rgba(55, 104, 123, 0.4)
+    );
+}
+
+#tr.fc-timegrid-slot,
+#tr.fc-timegrid-axis-frame {
+    display: block !important;
+    width: 40px !important;
+    height: 40px !important;
+}
+
+/* The default view can be month in your case, so it won't require a special class */

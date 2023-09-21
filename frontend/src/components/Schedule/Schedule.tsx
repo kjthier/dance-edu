@@ -7,6 +7,8 @@ import {
 } from 'react'
 import { EventClickArg } from '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/react'
+import timeGridPlugin from '@fullcalendar/timegrid'
+
 import dayGridPlugin from '@fullcalendar/daygrid'
 import EventUnenrollModal from '../reusable/EventUnenrollModal'
 import CreateUserEventModal from './CreateUserEventModal'
@@ -89,7 +91,7 @@ const expandUserEventsToEvents = (userEvents: IUserEvent[]): any[] => {
 
 const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
     const calendarRef = useRef<any>(null)
-    const [viewMode, setViewMode] = useState('dayGridMonth') // month view by default
+    const [viewMode, setViewMode] = useState('timeGridWeek') // month view by default
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [courses, setCourses] = useState<ICourse[]>([])
     const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
@@ -203,7 +205,7 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
                     id='fullcalendar'
                 >
                     <FullCalendar
-                        plugins={[dayGridPlugin]}
+                        plugins={[dayGridPlugin, timeGridPlugin]}
                         initialView={viewMode}
                         events={[...expandedCourses, ...expandedUserEvents]}
                         eventClick={eventClickDispatcher}
@@ -211,15 +213,17 @@ const Schedule = forwardRef(({ userId }: ScheduleProps, ref: any) => {
                         headerToolbar={{
                             left: 'prev,next',
                             center: 'title',
-                            right: 'today dayGridDay,dayGridWeek,dayGridMonth',
+                            right: 'today timeGridDay,timeGridWeek,dayGridMonth',
                         }}
+                        slotMinTime={'07:00:00'}
+                        slotMaxTime={'22:00:00'}
                         viewDidMount={(args) => {
                             const calendarElement: HTMLElement | null =
                                 document.getElementById('fullcalendar')
                             if (calendarElement) {
-                                if (args.view.type === 'dayGridWeek') {
+                                if (args.view.type === 'timeGridWeek') {
                                     calendarElement.classList.add('week-view')
-                                } else if (args.view.type === 'dayGridDay') {
+                                } else if (args.view.type === 'timeGridDay') {
                                     calendarElement.classList.add('day-view')
                                 } else {
                                     calendarElement.classList.remove(

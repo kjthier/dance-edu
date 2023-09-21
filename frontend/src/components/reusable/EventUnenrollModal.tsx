@@ -128,7 +128,7 @@ const EventUnenrollModal: React.FC<EventUnenrollModalProps> = ({
                         </>
                     )}
                     <Dialog.Close
-                        className='action-label primary-btn'
+                        className='action-label primary-btn warning-btn'
                         onClick={handleUnenroll}
                     >
                         Unenroll
