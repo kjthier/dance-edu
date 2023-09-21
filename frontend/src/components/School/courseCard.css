@@ -1,14 +1,19 @@
 .course-card {
     max-width: 250px;
     min-height: 270px;
-    border: 1px solid var(--border-color);
+    border: 0.7px solid var(--border-color);
     border-radius: 20px;
     overflow: hidden;
     width: 100%;
     display: flex;
     flex-direction: column;
     /* backgroundImage: `url(${course.image})`, */
-    background-image: url('../../assets/course-card-img.jpg');
+    background: linear-gradient(
+        270deg,
+        rgba(23, 25, 39, 0.18) 0,
+        rgba(23, 25, 39, 0.13) 48.96%,
+        rgba(23, 25, 39, 0.08)
+    );
     background-size: cover;
     background-position: center;
     box-shadow: var(--main-shadow);
@@ -21,7 +26,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    position:relative;
+    position: relative;
 }
 
 .course-card-title {
@@ -29,7 +34,6 @@
     margin: 6px 0px 15px 0px;
     color: #37687b;
     font-weight: bold;
-
 }
 
 .course-card-programType {
@@ -48,8 +52,7 @@
     font-size: 13px;
     color: var(--tertiary-text-color);
     margin-top: 10px;
-        font-style: italic;
-
+    font-style: italic;
 }
 
 .course-card-level-type {
@@ -90,14 +93,13 @@
 }
 
 .enrolled-label {
-    position:absolute;
+    position: absolute;
     bottom: 15px;
     right: 20px;
     font-size: 14px;
     font-style: italic;
     font-weight: bold;
     color: #0169aa;
-
 }
 
 @media (max-width: 768px) {

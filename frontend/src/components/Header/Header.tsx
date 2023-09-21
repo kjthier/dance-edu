@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({ userId }) => {
                     <Avatr />
                     <Box>
                         {firstName && (
-                            <Text as='p' mb='1' size='2' weight='bold'>
+                            <Text className='welcome-text' as='p' mb='1' size='2' weight='bold'>
                                 Welcome, {firstName}!
                             </Text>
                         )}

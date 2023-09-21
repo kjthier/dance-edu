@@ -1,11 +1,10 @@
-body {
-    background: linear-gradient(90deg, #47869e 0%, #37687b 100%);
-}
-
 .login {
-    width: 360px;
-    padding: 8% 0 0;
-    margin: auto;
+    background: linear-gradient(90deg, #47869e 0%, #37687b 100%);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .form {

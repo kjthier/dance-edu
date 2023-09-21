@@ -89,7 +89,7 @@ const EventUnenrollModal: React.FC<EventUnenrollModalProps> = ({
                                     </em>
                                 </Text>
                                 <Text as='span' className='event-modal-level'>
-                                    {extendedProps.level}
+                                    Level: {extendedProps.level}
                                 </Text>
                             </Box>
 

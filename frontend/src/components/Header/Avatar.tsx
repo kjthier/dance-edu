@@ -38,15 +38,20 @@ const Avatar = () => (
                             <div className='Text faded'>@kthier</div>
                         </div>
                         <div className='Text'>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Doloremque sequi neque soluta aut quo
-                            excepturi provident, deleniti culpa quae pariatur
-                            recusandae est molestiae corrupti nobis, blanditiis
-                            nihil vel consequatur sint.
+                            “I am of the opinion that my life belongs to the
+                            whole community and as long as I live, it is my
+                            privilege to do for it what I can. I want to be
+                            thoroughly used up when I die, for the harder I
+                            work, the more I live. I rejoice in life for its own
+                            sake. Life is no brief candle to me. It is a sort of
+                            splendid torch which I have got hold of for the
+                            moment and I want to make it burn as brightly as
+                            possible before handing it on to future
+                            generations.” ― George Bernard Shaw
                         </div>
                         <div style={{ display: 'flex', gap: 15 }}>
                             <div style={{ display: 'flex', gap: 5 }}>
-                                <div className='Text bold'>0</div>{' '}
+                                <div className='Text bold'>550</div>{' '}
                                 <div className='Text faded'>Following</div>
                             </div>
                             <div style={{ display: 'flex', gap: 5 }}>

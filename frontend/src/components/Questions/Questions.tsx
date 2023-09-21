@@ -62,7 +62,7 @@ const Questions: React.FC<QuestionsProps> = ({ userId }) => {
             if (q.userId === id) {
                 return {
                     ...q,
-                    answer: 'This is a test answer.',
+                    answer: 'Hey Karin, thanks for your question. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget nulla non magna sollicitudin vestibulum. Praesent tincidunt pulvinar urna vel ultricies. Quisque tristique tincidunt tortor ut vulputate. Phasellus blandit rhoncus ante aliquam mollis. In iaculis lorem a risus tristique hendrerit. Mauris sed mattis quam.',
                     answerTimestamp: new Date().toLocaleString(),
                 }
             }
@@ -106,10 +106,15 @@ const Questions: React.FC<QuestionsProps> = ({ userId }) => {
                                 {q.answerTimestamp}
                             </Text>
                         )}
-                        {/* button only to test answers for styling purposes */}
-                        <button onClick={() => handleTestAnswer(q.userId)}>
-                            Add Test Answer
-                        </button>
+                        {/* button only to test answers for styling purposes - conditionally rendered if reply has not yet been sent */}
+                        {!q.answer && (
+                            <button
+                                className='primary-btn reply-btn'
+                                onClick={() => handleTestAnswer(q.userId)}
+                            >
+                                Reply
+                            </button>
+                        )}
                     </Box>
                 ))}
             </Box>

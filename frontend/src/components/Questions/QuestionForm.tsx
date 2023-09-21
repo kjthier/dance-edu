@@ -41,8 +41,8 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
             </Form.Field>
 
             <Form.Submit asChild>
-                <button className='primary-btn' type='submit'>
-                    Submit
+                <button className='primary-btn send-btn' type='submit'>
+                    Send
                 </button>
             </Form.Submit>
         </Form.Root>

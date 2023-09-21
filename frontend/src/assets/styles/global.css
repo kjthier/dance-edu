@@ -39,6 +39,32 @@ h4 {
     font-size: 16px;
 }
 
+.main-container {
+    display: grid;
+    padding: 20px 20px 20px 20px;
+    background-color: var(--primary-bg-color);
+    min-height: 100vh; /* Takes at least full viewport height */
+
+}
+
+.content-wrapper {
+    display: flex;
+    padding: 20px;
+    background-color: var(--secondary-bg-color);
+}
+
+.main-content {
+    flex: 1;
+}
+
+.main-content.open {
+    margin-left: 150px; /* expanded sidebar width */
+}
+
+.main-content.closed {
+    margin-left: 20px; /* collapsed sidebar width */
+}
+
 .primary-btn {
     font-size: 14px;
     background: linear-gradient(

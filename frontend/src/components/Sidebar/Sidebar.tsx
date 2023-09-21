@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { RowsIcon, Cross1Icon } from '@radix-ui/react-icons'
+import { RowsIcon, Cross1Icon, GearIcon } from '@radix-ui/react-icons'
 import './Sidebar.css'
 
 type SidebarProps = {
@@ -49,6 +49,9 @@ const Sidebar: React.FC<SidebarProps> = ({ userId, isOpen, toggleSidebar }) => {
                         </li>
                         <li>
                             <Link to={`/student/${userId}/forum`}>Forum</Link>
+                        </li>
+                        <li>
+                            <Link to={`/student/${userId}/settings`}><GearIcon /></Link>
                         </li>
                     </ul>
                 </nav>
