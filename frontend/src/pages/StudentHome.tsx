@@ -13,7 +13,7 @@ import Footer from '../components/Footer/Footer'
 
 const StudentHome: React.FC = () => {
     const { userId } = useParams()
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
     const calendarRef = useRef<any>(null) // Newly added line for sharing ref
 
     useEffect(() => {
