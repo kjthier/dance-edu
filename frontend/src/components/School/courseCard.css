@@ -1,7 +1,7 @@
 .course-card {
     max-width: 250px;
     min-height: 270px;
-    border: 0.7px solid var(--border-color);
+    /* border: 0.3px solid var(--border-color); */
     border-radius: 20px;
     overflow: hidden;
     width: 100%;
@@ -17,6 +17,10 @@
     background-size: cover;
     background-position: center;
     box-shadow: var(--main-shadow);
+}
+
+.course-card:hover {
+    cursor: pointer;
 }
 
 .course-card-content {
