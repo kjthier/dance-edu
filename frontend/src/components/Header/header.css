@@ -14,7 +14,8 @@
     background-color: var(--secondary-bg-color);
     justify-content: center;
 }
-› .logo img {
+
+.logo img {
     width: 200px;
 }
 
