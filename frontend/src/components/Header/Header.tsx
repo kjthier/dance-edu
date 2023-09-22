@@ -3,7 +3,7 @@ import { Box, Text, Heading, Flex } from '@radix-ui/themes'
 import Avatr from './Avatar'
 import logo from '../../assets/logo.png'
 import axios from 'axios'
-import './Header.css'
+// import './Header.css'
 
 interface HeaderProps {
     userId: string
@@ -16,7 +16,9 @@ const Header: React.FC<HeaderProps> = ({ userId }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`https://dance-edu.onrender.com/api/auth/user/${userId}`)
+                const response = await axios.get(
+                    `https://dance-edu.onrender.com/api/auth/user/${userId}`
+                )
                 setFirstName(response.data.firstName)
             } catch (error) {
                 console.error('An error occurred while fetching data: ', error)
@@ -36,7 +38,13 @@ const Header: React.FC<HeaderProps> = ({ userId }) => {
                     <Avatr />
                     <Box>
                         {firstName && (
-                            <Text className='welcome-text' as='p' mb='1' size='2' weight='bold'>
+                            <Text
+                                className='welcome-text'
+                                as='p'
+                                mb='1'
+                                size='2'
+                                weight='bold'
+                            >
                                 Welcome, {firstName}!
                             </Text>
                         )}
@@ -49,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ userId }) => {
                 </Box>
             </Flex>
         </div>
-    );
-};
+    )
+}
 
-export default Header;
+export default Header
