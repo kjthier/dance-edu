@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ICourse, ISession, IUserEvent } from '../../types/ICourse'
+import { ICourse, IUserEvent } from '../../types/ICourse'
 import axios from 'axios'
 
 const TodaySchedule: React.FC = () => {
