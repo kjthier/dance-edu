@@ -14,34 +14,34 @@ const Auth: React.FC = () => {
     const [showPopup, setShowPopup] = useState(false)
 
     // hardcoded user as logged in for dev only
-    useEffect(() => {
-        const autoLogin = async () => {
-            if (process.env.NODE_ENV === 'development') {
-                const baseURL = 'https://dance-edu.onrender.com'
-                const endpoint = '/api/auth/login'
+    // useEffect(() => {
+    //     const autoLogin = async () => {
+    //         if (process.env.NODE_ENV === 'development') {
+    //             const baseURL = 'https://dance-edu.onrender.com'
+    //             const endpoint = '/api/auth/login'
 
-                // Your test user's credentials
-                const testEmail = 'karint@example.com'
-                const testPassword = '1234'
+    //             // Your test user's credentials
+    //             const testEmail = 'karint@example.com'
+    //             const testPassword = '1234'
 
-                try {
-                    const response = await axios.post(`${baseURL}${endpoint}`, {
-                        email: testEmail,
-                        password: testPassword,
-                    })
-                    if (response.data.token) {
-                        localStorage.setItem('authToken', response.data.token)
-                        localStorage.setItem('userId', response.data.userId)
-                        navigate(`/student/${response.data.userId}/dashboard`)
-                    }
-                } catch (error) {
-                    console.log('Auto-login failed:', error)
-                }
-            }
-        }
+    //             try {
+    //                 const response = await axios.post(`${baseURL}${endpoint}`, {
+    //                     email: testEmail,
+    //                     password: testPassword,
+    //                 })
+    //                 if (response.data.token) {
+    //                     localStorage.setItem('authToken', response.data.token)
+    //                     localStorage.setItem('userId', response.data.userId)
+    //                     navigate(`/student/${response.data.userId}/dashboard`)
+    //                 }
+    //             } catch (error) {
+    //                 console.log('Auto-login failed:', error)
+    //             }
+    //         }
+    //     }
 
-        autoLogin()
-    }, [navigate])
+    //     autoLogin()
+    // }, [navigate])
 
     interface IResponseData {
         token?: string
