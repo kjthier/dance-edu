@@ -34,7 +34,7 @@ const EditUserEventModal: React.FC<EditUserEventModalProps> = ({
     }
 
     // Convert ISO string to the date string format that <input type='date'> expects ("YYYY-MM-DD").
-    const isoStringToDateInputValue = (isoString) => {
+    const isoStringToDateInputValue = (isoString: string): string => {
         const date = new Date(isoString)
         return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
             2,

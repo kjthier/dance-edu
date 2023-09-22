@@ -9,11 +9,11 @@ import Achievements from './Achievements'
 import './Dashboard.css'
 
 const Dashboard: React.FC = () => {
-    const dashboardRef = useRef(null)
+    const dashboardRef = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
         if (dashboardRef.current) {
-            const packery = new Packery(dashboardRef.current, {
+            const packery = new (Packery as any)(dashboardRef.current, {
                 itemSelector: '.dashboard-item',
                 gutter: 10,
             })
@@ -22,9 +22,9 @@ const Dashboard: React.FC = () => {
             const savedLayout = localStorage.getItem('dashboardLayout')
             if (savedLayout) {
                 const layout = JSON.parse(savedLayout)
-                layout.forEach((id) => {
+                layout.forEach((id: string) => {
                     const item = document.querySelector(`[data-id="${id}"]`)
-                    if (item) {
+                    if (item && dashboardRef.current) {
                         dashboardRef.current.appendChild(item)
                     }
                 })
@@ -32,9 +32,9 @@ const Dashboard: React.FC = () => {
             }
 
             // Make draggable
-            const draggies = []
-            const items = packery.getItemElements()
-            items.forEach((item) => {
+            const draggies: Draggabilly[] = []
+            const items: HTMLElement[] = packery.getItemElements()
+            items.forEach((item: HTMLElement) => {
                 const draggie = new Draggabilly(item)
                 draggies.push(draggie)
                 packery.bindDraggabillyEvents(draggie)
@@ -42,9 +42,10 @@ const Dashboard: React.FC = () => {
 
             // Save layout to localStorage
             packery.on('dragItemPositioned', () => {
-                const layout = packery
-                    .getItemElements()
-                    .map((item) => item.getAttribute('data-id'))
+                const layout = items.map(
+                    (item: HTMLElement) =>
+                        item.getAttribute('data-id') as string
+                )
                 localStorage.setItem('dashboardLayout', JSON.stringify(layout))
             })
         }

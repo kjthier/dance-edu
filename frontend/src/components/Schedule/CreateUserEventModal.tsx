@@ -33,14 +33,21 @@ const CreateUserEventModal: React.FC<CreateUserEventModalProps> = ({
         programType: ProgramType.CLASS,
     })
 
-    const handleChange = (e) => {
-        const { name, value, type } = e.target
-        const finalValue = type === 'checkbox' ? e.target.checked : value
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value, type } = e.target;
+        let finalValue;
+    
+        if (type === 'checkbox' && e.target instanceof HTMLInputElement) {
+            finalValue = e.target.checked;
+        } else {
+            finalValue = value;
+        }
+    
         setFormData({
             ...formData,
             [name]: finalValue,
-        })
-    }
+        });
+    };
 
     const addUserEvent = async (newEvent: IUserEvent) => {
         let response

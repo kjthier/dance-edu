@@ -119,11 +119,14 @@
     );
 }
 
-#tr.fc-timegrid-slot,
-#tr.fc-timegrid-axis-frame {
-    display: block !important;
-    width: 40px !important;
+
+
+
+
+
+tr.fc-timegrid-slot,
+tr.fc-timegrid-axis-frame {
+    /* display: block !important; */
+    width: 80px !important;
     height: 40px !important;
 }
-
-/* The default view can be month in your case, so it won't require a special class */

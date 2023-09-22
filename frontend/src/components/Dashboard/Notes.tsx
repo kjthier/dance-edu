@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { TextArea } from '@radix-ui/themes'
 
 const Notes: React.FC = () => {
     const [notes, setNotes] = useState('')

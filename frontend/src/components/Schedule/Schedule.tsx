@@ -22,17 +22,20 @@ type ScheduleProps = {
 }
 
 // utility function for expandCoursesToEvents()
-const convertTo24Hour = (time) => {
+const convertTo24Hour = (time: string): string => {
     const [mainTime, period] = time.split(' ')
-    let [hours, minutes] = mainTime.split(':')
+    const timeParts = mainTime.split(':')
+    let hours = timeParts[0]
+    const minutes = timeParts[1]
 
     if (period === 'PM' && +hours !== 12) {
-        hours = +hours + 12
+        hours = (+hours + 12).toString()
     }
 
     if (period === 'AM' && +hours === 12) {
         hours = '00'
     }
+
 
     return `${hours}:${minutes}`
 }
