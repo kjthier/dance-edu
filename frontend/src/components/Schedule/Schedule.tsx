@@ -14,7 +14,7 @@ import EventUnenrollModal from '../reusable/EventUnenrollModal'
 import CreateUserEventModal from './CreateUserEventModal'
 import EditUserEventModal from './EditUserEventModal'
 import { ICourse, IUserEvent } from '../../types/ICourse'
-import './Schedule.css'
+import './schedule.css'
 
 type ScheduleProps = {
     userId: string

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { RowsIcon, Cross1Icon, GearIcon } from '@radix-ui/react-icons'
-import './Sidebar.css'
+import './sidebar.css'
 
 type SidebarProps = {
     userId: string

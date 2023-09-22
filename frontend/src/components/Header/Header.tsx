@@ -3,7 +3,7 @@ import { Box, Text, Heading, Flex } from '@radix-ui/themes'
 import Avatr from './Avatar'
 import logo from '../../assets/logo.png'
 import axios from 'axios'
-import './Header.css'
+import './header.css'
 
 interface HeaderProps {
     userId: string

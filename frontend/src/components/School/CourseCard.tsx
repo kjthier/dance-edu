@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Text } from '@radix-ui/themes'
 import { ICourse } from '../../types/ICourse'
 import { CheckIcon } from '@radix-ui/react-icons'
-import './CourseCard.css'
+import './courseCard.css'
 
 // checking if student is already enrolled - default false
 const CourseCard: React.FC<{
